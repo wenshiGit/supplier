@@ -20,6 +20,5 @@ public class SupInvenTest extends BaseTest{
 
 	@Test
 	public void updateIvnen() {
-//		supInventoryService.updateInven("106802");
 	} 
 }

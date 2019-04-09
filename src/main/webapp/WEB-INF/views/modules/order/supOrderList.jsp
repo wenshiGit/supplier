@@ -39,19 +39,50 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<shiro:hasPermission name="order:supOrder:edit"><th>操作</th></shiro:hasPermission>
+				<th>状态</th>
+				<th>订单编号</th>
+				<th>货号</th>
+				<th>内部码</th>
+				<th>外部码</th>
+				<th>数量</th>
+				<th>吊牌价</th>
+				<th>代理价</th>
+				<th>下单折扣</th>
+				<th>收货人</th>
+				<th>物流方式</th>
+				<th>快递</th>
+				<th>快递单号</th>
+				<th>运费</th>
+				<th>备注</th>
+				<th>代理编号</th>
+				<th>代理ID</th>
 			</tr>
+			<%-- <tr>
+				<shiro:hasPermission name="order:supOrder:edit"><th>操作</th></shiro:hasPermission>
+			</tr> --%>
 		</thead>
 		<tbody>
-		
-		<c:forEach items="${page.list}" var="supOrder">
-			<tr>
-				<shiro:hasPermission name="order:supOrder:edit"><td>
-    				<a href="${ctx}/order/supOrder/form?id=${supOrder.id}">修改</a>
-					<a href="${ctx}/order/supOrder/delete?id=${supOrder.id}" onclick="return confirmx('确认要删除该订单管理吗？', this.href)">删除</a>
-				</td></shiro:hasPermission>
-			</tr>
-		</c:forEach>
+			<c:forEach items="${page.list}" var="supOrder">
+				<tr>
+					<td>${supOrder.orderState}</td>
+					<td>${supOrder.orderId}</td>
+					<td>${supOrder.productNo}</td>
+					<td>${supOrder.innnerSize}</td>
+					<td>${supOrder.outSize}</td>
+					<td>${supOrder.goodsCount}</td>
+					<td>${supOrder.tagPrice}</td>
+					<td>${supOrder.payment}</td>
+					<td>${supOrder.discount}</td>
+					<td>${supOrder.custName}</td>
+					<td>${supOrder.logisticsType}</td>
+					<td>${supOrder.expressComp}</td>
+					<td>${supOrder.trackingNo}</td>
+					<td>${supOrder.postage}</td>
+					<td>${supOrder.remark}</td>
+					<td>${supOrder.agentId}</td>
+					<td>${supOrder.agentName}</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	<div class="pagination">${page}</div>

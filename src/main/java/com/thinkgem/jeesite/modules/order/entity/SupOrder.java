@@ -52,7 +52,7 @@ public class SupOrder extends DataEntity<SupOrder> {
 	private Double factDiscount;		// 实际折扣
 	private String factExpressComp;		// 实发快递
 	private Double factPostage;		// 实际邮费
-	private Long factGoodsCount;		// 实际折扣
+	private Long factGoodsCount;		// 实际发货数量
 	private Long genderId;		// 性别ID
 	private String genderName;		// 性别
 	private Long goodsCount;		// 数量

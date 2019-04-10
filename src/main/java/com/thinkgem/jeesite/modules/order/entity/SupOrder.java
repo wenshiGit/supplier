@@ -7,94 +7,54 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.List;
+import com.google.common.collect.Lists;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 订单管理Entity
  * @author ZiruiSong
- * @version 2019-04-08
+ * @version 2019-04-10
  */
 public class SupOrder extends DataEntity<SupOrder> {
 	
 	private static final long serialVersionUID = 1L;
 	private Long orderId;		// 订单编号
 	private String apiOrderId;		// API订单编号
-	private Long area;		// 区域ID
-	private String areaName;		// 区域
-	private String bailiSynchorState;		// 百丽同步状态
-	private Long brandId;		// 品牌ID
-	private String brandName;		// 品牌名称
-	private Long expressId;		// 快递公司ID
-	private Date channelConfirmTime;		// 渠道确认时间
-	private Double channelPostage;		// 渠道邮费
-	private Long channelId;		// 渠道ID
-	private String channelName;		// 渠道名称
-	private Date channelSendTime;		// 渠道发货时间
-	private String channelsBefore;		// 转仓前渠道
-	private Long channelsNumBefore;		// 转仓前渠道编号
-	private Long checkUserId;		// 审核人
-	private String checkUserName;		// 审核人
-	private Long cityId;		// 城市编码
-	private String cityName;		// 城市
-	private Double custPostage;		// 客户邮费
-	private String custAddr;		// 买家地址
-	private String custName;		// 收货人
-	private String custTel;		// 收货电话
-	private String customOrderId;		// 自定义单号
-	private Double discount;		// 下单折扣
-	private String expressComp;		// 快递公司
-	private String expressCompOri;		// 原快递公司
-	private String trackingNo;		// 快递单号
-	private Double postage;		// 快递费用
-	private String errMsg;		// 错误信息
-	private Long factExpressId;		// 实发快递ID
-	private Double factDiscount;		// 实际折扣
-	private String factExpressComp;		// 实发快递
-	private Double factPostage;		// 实际邮费
-	private Long factGoodsCount;		// 实际发货数量
-	private Long genderId;		// 性别ID
-	private String genderName;		// 性别
-	private Long goodsCount;		// 数量
-	private String productNo;		// 货号
-	private Double tagPrice;		// 吊牌价格
-	private String innnerSize;		// 内部尺码
-	private Long catagroyId;		// 商品类别ID
-	private String catagroyName;		// 商品类别
-	private String isInvoice;		// 发票申请
-	private String isService;		// 售后申请
-	private String oid;		// 淘宝子订单号
-	private String orderFahuoState;		// 发货状态
-	private String orderIp;		// IP地址
-	private Long orderParentId;		// 主订单号
-	private Double payment;		// 实付金额
-	private String orderPricePre;		// 订单预付款
-	private String orderState;		// 订单状态
-	private Date orderStateTime;		// 状态更新时间
-	private Date payTime;		// 付款时间
 	private Long agentId;		// 代理ID
-	private String agentName;		// 代理名
-	private String outProductNo;		// 外部订单号
-	private String outSize;		// 外部尺码
-	private Double commissionAgio;		// 佣金折扣
-	private Double commission;		// 佣金
-	private Double postFeeCommission;		// 运费佣金
-	private Double postFeeCommissionPre;		// 预付运费佣金
-	private Long provinceId;		// 省份编号
-	private String provinceName;		// 省份
-	private String remark;		// 备注
-	private Long seasonId;		// 季节编号
-	private String seasonName;		// 季节
-	private Long shopId;		// 店铺编号
-	private String shopName;		// 店铺
-	private String status;		// 状态
+	private Long agentExpressId;		// 快递公司ID
+	private Double agentPostFee;		// 代理总邮费
+	private Double agentTotalFee;		// 代理实付总金额
+	private Date agentPayTime;		// 代理付款时间
+	private String agentIpAddress;		// 代理IP地址
+	private Long channelId;		// 渠道ID
+	private Date channelConfirmTime;		// 渠道确认时间
+	private Double channelPostFee;		// 渠道总快递费用
+	private Date channelSendTime;		// 渠道发货时间
+	private Double channelTotalReceivedFee;		// 渠道实收总金额
+	private Long confirmUserId;		// 审核人
+	private Long receiverState;		// 收货人所在省份
+	private Long reveiverCity;		// 收货人所在的城市
+	private Long reveiverDistrict;		// 收货人的所在地区
+	private String receiverName;		// 收货人姓名
+	private String receiverMobile;		// 收货人电话
+	private String receiverAddress;		// 收货人地址
+	private String expressNo;		// 快递单号
+	private String logisticsCompany;		// 订单发货快递
+	private String errMsg;		// 错误信息
+	private String customerServiceId;		// 售后编号
+	private Double totalFee;		// 订单总价(不含邮费)
+	private String orderStatus;		// 订单状态  0:待付款，1:已付款，2:待审核，3:配货中，4:已发货，5:已取消，6:交易完成
+	private Double commissionFee;		// 交易佣金
+	private String buyerMessage;		// 买家留言
+	private Long shopId;		// 店铺ID
 	private String tid;		// 淘宝主订单号
-	private Double packagePrice;		// 包装费
-	private Integer logisticsType;		// 物流方式
-	private Date declarationFormDate;		// 报单日期
-	private Integer orderSrc;		// 订单来源
-	private Double importOverPrice;		// 结算金额
-	private String outerIid;		// 商家外部编码
+	private Double packageFee;		// 包装费
+	private String orderFrom;		// 订单来源 1淘宝  2京东  3自动
+	private Date createTime;		// 订单创建时间
+	private Date updateTime;		// 修改时间
+	private List<SupSubOrder> supSubOrderList = Lists.newArrayList();		// 子表列表
 	
 	public SupOrder() {
 		super();
@@ -113,7 +73,7 @@ public class SupOrder extends DataEntity<SupOrder> {
 		this.orderId = orderId;
 	}
 	
-	@Length(min=0, max=100, message="API订单编号长度必须介于 0 和 100 之间")
+	@Length(min=0, max=64, message="API订单编号长度必须介于 0 和 64 之间")
 	public String getApiOrderId() {
 		return apiOrderId;
 	}
@@ -122,55 +82,67 @@ public class SupOrder extends DataEntity<SupOrder> {
 		this.apiOrderId = apiOrderId;
 	}
 	
-	public Long getArea() {
-		return area;
+	@NotNull(message="代理ID不能为空")
+	public Long getAgentId() {
+		return agentId;
 	}
 
-	public void setArea(Long area) {
-		this.area = area;
+	public void setAgentId(Long agentId) {
+		this.agentId = agentId;
 	}
 	
-	@Length(min=0, max=200, message="区域长度必须介于 0 和 200 之间")
-	public String getAreaName() {
-		return areaName;
+	@NotNull(message="快递公司ID不能为空")
+	public Long getAgentExpressId() {
+		return agentExpressId;
 	}
 
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
+	public void setAgentExpressId(Long agentExpressId) {
+		this.agentExpressId = agentExpressId;
 	}
 	
-	@Length(min=0, max=1, message="百丽同步状态长度必须介于 0 和 1 之间")
-	public String getBailiSynchorState() {
-		return bailiSynchorState;
+	@NotNull(message="代理总邮费不能为空")
+	public Double getAgentPostFee() {
+		return agentPostFee;
 	}
 
-	public void setBailiSynchorState(String bailiSynchorState) {
-		this.bailiSynchorState = bailiSynchorState;
+	public void setAgentPostFee(Double agentPostFee) {
+		this.agentPostFee = agentPostFee;
 	}
 	
-	public Long getBrandId() {
-		return brandId;
+	@NotNull(message="代理实付总金额不能为空")
+	public Double getAgentTotalFee() {
+		return agentTotalFee;
 	}
 
-	public void setBrandId(Long brandId) {
-		this.brandId = brandId;
+	public void setAgentTotalFee(Double agentTotalFee) {
+		this.agentTotalFee = agentTotalFee;
 	}
 	
-	@Length(min=0, max=20, message="品牌名称长度必须介于 0 和 20 之间")
-	public String getBrandName() {
-		return brandName;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getAgentPayTime() {
+		return agentPayTime;
 	}
 
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
+	public void setAgentPayTime(Date agentPayTime) {
+		this.agentPayTime = agentPayTime;
 	}
 	
-	public Long getExpressId() {
-		return expressId;
+	@Length(min=0, max=32, message="代理IP地址长度必须介于 0 和 32 之间")
+	public String getAgentIpAddress() {
+		return agentIpAddress;
 	}
 
-	public void setExpressId(Long expressId) {
-		this.expressId = expressId;
+	public void setAgentIpAddress(String agentIpAddress) {
+		this.agentIpAddress = agentIpAddress;
+	}
+	
+	@NotNull(message="渠道ID不能为空")
+	public Long getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(Long channelId) {
+		this.channelId = channelId;
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -182,29 +154,12 @@ public class SupOrder extends DataEntity<SupOrder> {
 		this.channelConfirmTime = channelConfirmTime;
 	}
 	
-	public Double getChannelPostage() {
-		return channelPostage;
+	public Double getChannelPostFee() {
+		return channelPostFee;
 	}
 
-	public void setChannelPostage(Double channelPostage) {
-		this.channelPostage = channelPostage;
-	}
-	
-	public Long getChannelId() {
-		return channelId;
-	}
-
-	public void setChannelId(Long channelId) {
-		this.channelId = channelId;
-	}
-	
-	@Length(min=0, max=30, message="渠道名称长度必须介于 0 和 30 之间")
-	public String getChannelName() {
-		return channelName;
-	}
-
-	public void setChannelName(String channelName) {
-		this.channelName = channelName;
+	public void setChannelPostFee(Double channelPostFee) {
+		this.channelPostFee = channelPostFee;
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -216,142 +171,95 @@ public class SupOrder extends DataEntity<SupOrder> {
 		this.channelSendTime = channelSendTime;
 	}
 	
-	@Length(min=0, max=100, message="转仓前渠道长度必须介于 0 和 100 之间")
-	public String getChannelsBefore() {
-		return channelsBefore;
+	public Double getChannelTotalReceivedFee() {
+		return channelTotalReceivedFee;
 	}
 
-	public void setChannelsBefore(String channelsBefore) {
-		this.channelsBefore = channelsBefore;
+	public void setChannelTotalReceivedFee(Double channelTotalReceivedFee) {
+		this.channelTotalReceivedFee = channelTotalReceivedFee;
 	}
 	
-	public Long getChannelsNumBefore() {
-		return channelsNumBefore;
+	public Long getConfirmUserId() {
+		return confirmUserId;
 	}
 
-	public void setChannelsNumBefore(Long channelsNumBefore) {
-		this.channelsNumBefore = channelsNumBefore;
+	public void setConfirmUserId(Long confirmUserId) {
+		this.confirmUserId = confirmUserId;
 	}
 	
-	public Long getCheckUserId() {
-		return checkUserId;
+	@NotNull(message="收货人所在省份不能为空")
+	public Long getReceiverState() {
+		return receiverState;
 	}
 
-	public void setCheckUserId(Long checkUserId) {
-		this.checkUserId = checkUserId;
+	public void setReceiverState(Long receiverState) {
+		this.receiverState = receiverState;
 	}
 	
-	@Length(min=0, max=50, message="审核人长度必须介于 0 和 50 之间")
-	public String getCheckUserName() {
-		return checkUserName;
+	@NotNull(message="收货人所在的城市不能为空")
+	public Long getReveiverCity() {
+		return reveiverCity;
 	}
 
-	public void setCheckUserName(String checkUserName) {
-		this.checkUserName = checkUserName;
+	public void setReveiverCity(Long reveiverCity) {
+		this.reveiverCity = reveiverCity;
 	}
 	
-	public Long getCityId() {
-		return cityId;
+	@NotNull(message="收货人的所在地区不能为空")
+	public Long getReveiverDistrict() {
+		return reveiverDistrict;
 	}
 
-	public void setCityId(Long cityId) {
-		this.cityId = cityId;
+	public void setReveiverDistrict(Long reveiverDistrict) {
+		this.reveiverDistrict = reveiverDistrict;
 	}
 	
-	@Length(min=0, max=100, message="城市长度必须介于 0 和 100 之间")
-	public String getCityName() {
-		return cityName;
+	@Length(min=1, max=64, message="收货人姓名长度必须介于 1 和 64 之间")
+	public String getReceiverName() {
+		return receiverName;
 	}
 
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
+	public void setReceiverName(String receiverName) {
+		this.receiverName = receiverName;
 	}
 	
-	public Double getCustPostage() {
-		return custPostage;
+	@Length(min=1, max=64, message="收货人电话长度必须介于 1 和 64 之间")
+	public String getReceiverMobile() {
+		return receiverMobile;
 	}
 
-	public void setCustPostage(Double custPostage) {
-		this.custPostage = custPostage;
+	public void setReceiverMobile(String receiverMobile) {
+		this.receiverMobile = receiverMobile;
 	}
 	
-	public String getCustAddr() {
-		return custAddr;
+	@Length(min=1, max=128, message="收货人地址长度必须介于 1 和 128 之间")
+	public String getReceiverAddress() {
+		return receiverAddress;
 	}
 
-	public void setCustAddr(String custAddr) {
-		this.custAddr = custAddr;
+	public void setReceiverAddress(String receiverAddress) {
+		this.receiverAddress = receiverAddress;
 	}
 	
-	@Length(min=0, max=100, message="收货人长度必须介于 0 和 100 之间")
-	public String getCustName() {
-		return custName;
+	@Length(min=0, max=128, message="快递单号长度必须介于 0 和 128 之间")
+	public String getExpressNo() {
+		return expressNo;
 	}
 
-	public void setCustName(String custName) {
-		this.custName = custName;
+	public void setExpressNo(String expressNo) {
+		this.expressNo = expressNo;
 	}
 	
-	public String getCustTel() {
-		return custTel;
+	@Length(min=0, max=64, message="订单发货快递长度必须介于 0 和 64 之间")
+	public String getLogisticsCompany() {
+		return logisticsCompany;
 	}
 
-	public void setCustTel(String custTel) {
-		this.custTel = custTel;
+	public void setLogisticsCompany(String logisticsCompany) {
+		this.logisticsCompany = logisticsCompany;
 	}
 	
-	@Length(min=0, max=100, message="自定义单号长度必须介于 0 和 100 之间")
-	public String getCustomOrderId() {
-		return customOrderId;
-	}
-
-	public void setCustomOrderId(String customOrderId) {
-		this.customOrderId = customOrderId;
-	}
-	
-	public Double getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(Double discount) {
-		this.discount = discount;
-	}
-	
-	@Length(min=0, max=50, message="快递公司长度必须介于 0 和 50 之间")
-	public String getExpressComp() {
-		return expressComp;
-	}
-
-	public void setExpressComp(String expressComp) {
-		this.expressComp = expressComp;
-	}
-	
-	public String getExpressCompOri() {
-		return expressCompOri;
-	}
-
-	public void setExpressCompOri(String expressCompOri) {
-		this.expressCompOri = expressCompOri;
-	}
-	
-	@Length(min=0, max=50, message="快递单号长度必须介于 0 和 50 之间")
-	public String getTrackingNo() {
-		return trackingNo;
-	}
-
-	public void setTrackingNo(String trackingNo) {
-		this.trackingNo = trackingNo;
-	}
-	
-	@NotNull(message="快递费用不能为空")
-	public Double getPostage() {
-		return postage;
-	}
-
-	public void setPostage(Double postage) {
-		this.postage = postage;
-	}
-	
+	@Length(min=0, max=128, message="错误信息长度必须介于 0 和 128 之间")
 	public String getErrMsg() {
 		return errMsg;
 	}
@@ -360,322 +268,48 @@ public class SupOrder extends DataEntity<SupOrder> {
 		this.errMsg = errMsg;
 	}
 	
-	public Long getFactExpressId() {
-		return factExpressId;
+	@Length(min=0, max=64, message="售后编号长度必须介于 0 和 64 之间")
+	public String getCustomerServiceId() {
+		return customerServiceId;
 	}
 
-	public void setFactExpressId(Long factExpressId) {
-		this.factExpressId = factExpressId;
+	public void setCustomerServiceId(String customerServiceId) {
+		this.customerServiceId = customerServiceId;
 	}
 	
-	public Double getFactDiscount() {
-		return factDiscount;
+	@NotNull(message="订单总价(不含邮费)不能为空")
+	public Double getTotalFee() {
+		return totalFee;
 	}
 
-	public void setFactDiscount(Double factDiscount) {
-		this.factDiscount = factDiscount;
+	public void setTotalFee(Double totalFee) {
+		this.totalFee = totalFee;
 	}
 	
-	@Length(min=0, max=200, message="实发快递长度必须介于 0 和 200 之间")
-	public String getFactExpressComp() {
-		return factExpressComp;
+	@Length(min=1, max=2, message="订单状态  0:待付款，1:已付款，2:待审核，3:配货中，4:已发货，5:已取消，6:交易完成长度必须介于 1 和 2 之间")
+	public String getOrderStatus() {
+		return orderStatus;
 	}
 
-	public void setFactExpressComp(String factExpressComp) {
-		this.factExpressComp = factExpressComp;
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 	
-	public Double getFactPostage() {
-		return factPostage;
+	@NotNull(message="交易佣金不能为空")
+	public Double getCommissionFee() {
+		return commissionFee;
 	}
 
-	public void setFactPostage(Double factPostage) {
-		this.factPostage = factPostage;
+	public void setCommissionFee(Double commissionFee) {
+		this.commissionFee = commissionFee;
 	}
 	
-	public Long getFactGoodsCount() {
-		return factGoodsCount;
+	public String getBuyerMessage() {
+		return buyerMessage;
 	}
 
-	public void setFactGoodsCount(Long factGoodsCount) {
-		this.factGoodsCount = factGoodsCount;
-	}
-	
-	public Long getGenderId() {
-		return genderId;
-	}
-
-	public void setGenderId(Long genderId) {
-		this.genderId = genderId;
-	}
-	
-	@Length(min=0, max=20, message="性别长度必须介于 0 和 20 之间")
-	public String getGenderName() {
-		return genderName;
-	}
-
-	public void setGenderName(String genderName) {
-		this.genderName = genderName;
-	}
-	
-	public Long getGoodsCount() {
-		return goodsCount;
-	}
-
-	public void setGoodsCount(Long goodsCount) {
-		this.goodsCount = goodsCount;
-	}
-	
-	@Length(min=0, max=50, message="货号长度必须介于 0 和 50 之间")
-	public String getProductNo() {
-		return productNo;
-	}
-
-	public void setProductNo(String productNo) {
-		this.productNo = productNo;
-	}
-	
-	public Double getTagPrice() {
-		return tagPrice;
-	}
-
-	public void setTagPrice(Double tagPrice) {
-		this.tagPrice = tagPrice;
-	}
-	
-	@Length(min=0, max=20, message="内部尺码长度必须介于 0 和 20 之间")
-	public String getInnnerSize() {
-		return innnerSize;
-	}
-
-	public void setInnnerSize(String innnerSize) {
-		this.innnerSize = innnerSize;
-	}
-	
-	public Long getCatagroyId() {
-		return catagroyId;
-	}
-
-	public void setCatagroyId(Long catagroyId) {
-		this.catagroyId = catagroyId;
-	}
-	
-	@Length(min=0, max=100, message="商品类别长度必须介于 0 和 100 之间")
-	public String getCatagroyName() {
-		return catagroyName;
-	}
-
-	public void setCatagroyName(String catagroyName) {
-		this.catagroyName = catagroyName;
-	}
-	
-	@Length(min=0, max=1, message="发票申请长度必须介于 0 和 1 之间")
-	public String getIsInvoice() {
-		return isInvoice;
-	}
-
-	public void setIsInvoice(String isInvoice) {
-		this.isInvoice = isInvoice;
-	}
-	
-	@Length(min=0, max=1, message="售后申请长度必须介于 0 和 1 之间")
-	public String getIsService() {
-		return isService;
-	}
-
-	public void setIsService(String isService) {
-		this.isService = isService;
-	}
-	
-	@Length(min=0, max=100, message="淘宝子订单号长度必须介于 0 和 100 之间")
-	public String getOid() {
-		return oid;
-	}
-
-	public void setOid(String oid) {
-		this.oid = oid;
-	}
-	
-	@Length(min=0, max=1, message="发货状态长度必须介于 0 和 1 之间")
-	public String getOrderFahuoState() {
-		return orderFahuoState;
-	}
-
-	public void setOrderFahuoState(String orderFahuoState) {
-		this.orderFahuoState = orderFahuoState;
-	}
-	
-	@Length(min=0, max=20, message="IP地址长度必须介于 0 和 20 之间")
-	public String getOrderIp() {
-		return orderIp;
-	}
-
-	public void setOrderIp(String orderIp) {
-		this.orderIp = orderIp;
-	}
-	
-	public Long getOrderParentId() {
-		return orderParentId;
-	}
-
-	public void setOrderParentId(Long orderParentId) {
-		this.orderParentId = orderParentId;
-	}
-	
-	public Double getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Double payment) {
-		this.payment = payment;
-	}
-	
-	public String getOrderPricePre() {
-		return orderPricePre;
-	}
-
-	public void setOrderPricePre(String orderPricePre) {
-		this.orderPricePre = orderPricePre;
-	}
-	
-	@Length(min=0, max=1, message="订单状态长度必须介于 0 和 1 之间")
-	public String getOrderState() {
-		return orderState;
-	}
-
-	public void setOrderState(String orderState) {
-		this.orderState = orderState;
-	}
-	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	public Date getOrderStateTime() {
-		return orderStateTime;
-	}
-
-	public void setOrderStateTime(Date orderStateTime) {
-		this.orderStateTime = orderStateTime;
-	}
-	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	public Date getPayTime() {
-		return payTime;
-	}
-
-	public void setPayTime(Date payTime) {
-		this.payTime = payTime;
-	}
-	
-	public Long getAgentId() {
-		return agentId;
-	}
-
-	public void setAgentId(Long agentId) {
-		this.agentId = agentId;
-	}
-	
-	@Length(min=0, max=50, message="代理名长度必须介于 0 和 50 之间")
-	public String getAgentName() {
-		return agentName;
-	}
-
-	public void setAgentName(String agentName) {
-		this.agentName = agentName;
-	}
-	
-	@Length(min=0, max=50, message="外部订单号长度必须介于 0 和 50 之间")
-	public String getOutProductNo() {
-		return outProductNo;
-	}
-
-	public void setOutProductNo(String outProductNo) {
-		this.outProductNo = outProductNo;
-	}
-	
-	@Length(min=0, max=50, message="外部尺码长度必须介于 0 和 50 之间")
-	public String getOutSize() {
-		return outSize;
-	}
-
-	public void setOutSize(String outSize) {
-		this.outSize = outSize;
-	}
-	
-	@NotNull(message="佣金折扣不能为空")
-	public Double getCommissionAgio() {
-		return commissionAgio;
-	}
-
-	public void setCommissionAgio(Double commissionAgio) {
-		this.commissionAgio = commissionAgio;
-	}
-	
-	@NotNull(message="佣金不能为空")
-	public Double getCommission() {
-		return commission;
-	}
-
-	public void setCommission(Double commission) {
-		this.commission = commission;
-	}
-	
-	@NotNull(message="运费佣金不能为空")
-	public Double getPostFeeCommission() {
-		return postFeeCommission;
-	}
-
-	public void setPostFeeCommission(Double postFeeCommission) {
-		this.postFeeCommission = postFeeCommission;
-	}
-	
-	@NotNull(message="预付运费佣金不能为空")
-	public Double getPostFeeCommissionPre() {
-		return postFeeCommissionPre;
-	}
-
-	public void setPostFeeCommissionPre(Double postFeeCommissionPre) {
-		this.postFeeCommissionPre = postFeeCommissionPre;
-	}
-	
-	public Long getProvinceId() {
-		return provinceId;
-	}
-
-	public void setProvinceId(Long provinceId) {
-		this.provinceId = provinceId;
-	}
-	
-	@Length(min=0, max=100, message="省份长度必须介于 0 和 100 之间")
-	public String getProvinceName() {
-		return provinceName;
-	}
-
-	public void setProvinceName(String provinceName) {
-		this.provinceName = provinceName;
-	}
-	
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-	
-	public Long getSeasonId() {
-		return seasonId;
-	}
-
-	public void setSeasonId(Long seasonId) {
-		this.seasonId = seasonId;
-	}
-	
-	@Length(min=0, max=100, message="季节长度必须介于 0 和 100 之间")
-	public String getSeasonName() {
-		return seasonName;
-	}
-
-	public void setSeasonName(String seasonName) {
-		this.seasonName = seasonName;
+	public void setBuyerMessage(String buyerMessage) {
+		this.buyerMessage = buyerMessage;
 	}
 	
 	public Long getShopId() {
@@ -686,25 +320,7 @@ public class SupOrder extends DataEntity<SupOrder> {
 		this.shopId = shopId;
 	}
 	
-	@Length(min=0, max=100, message="店铺长度必须介于 0 和 100 之间")
-	public String getShopName() {
-		return shopName;
-	}
-
-	public void setShopName(String shopName) {
-		this.shopName = shopName;
-	}
-	
-	@Length(min=0, max=10, message="状态长度必须介于 0 和 10 之间")
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	@Length(min=0, max=100, message="淘宝主订单号长度必须介于 0 和 100 之间")
+	@Length(min=0, max=128, message="淘宝主订单号长度必须介于 0 和 128 之间")
 	public String getTid() {
 		return tid;
 	}
@@ -714,54 +330,47 @@ public class SupOrder extends DataEntity<SupOrder> {
 	}
 	
 	@NotNull(message="包装费不能为空")
-	public Double getPackagePrice() {
-		return packagePrice;
+	public Double getPackageFee() {
+		return packageFee;
 	}
 
-	public void setPackagePrice(Double packagePrice) {
-		this.packagePrice = packagePrice;
+	public void setPackageFee(Double packageFee) {
+		this.packageFee = packageFee;
 	}
 	
-	public Integer getLogisticsType() {
-		return logisticsType;
+	@Length(min=1, max=1, message="订单来源 1淘宝  2京东  3自动长度必须介于 1 和 1 之间")
+	public String getOrderFrom() {
+		return orderFrom;
 	}
 
-	public void setLogisticsType(Integer logisticsType) {
-		this.logisticsType = logisticsType;
+	public void setOrderFrom(String orderFrom) {
+		this.orderFrom = orderFrom;
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	public Date getDeclarationFormDate() {
-		return declarationFormDate;
+	@NotNull(message="订单创建时间不能为空")
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setDeclarationFormDate(Date declarationFormDate) {
-		this.declarationFormDate = declarationFormDate;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 	
-	public Integer getOrderSrc() {
-		return orderSrc;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 
-	public void setOrderSrc(Integer orderSrc) {
-		this.orderSrc = orderSrc;
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 	
-	public Double getImportOverPrice() {
-		return importOverPrice;
+	public List<SupSubOrder> getSupSubOrderList() {
+		return supSubOrderList;
 	}
 
-	public void setImportOverPrice(Double importOverPrice) {
-		this.importOverPrice = importOverPrice;
+	public void setSupSubOrderList(List<SupSubOrder> supSubOrderList) {
+		this.supSubOrderList = supSubOrderList;
 	}
-	
-	@Length(min=0, max=30, message="商家外部编码长度必须介于 0 和 30 之间")
-	public String getOuterIid() {
-		return outerIid;
-	}
-
-	public void setOuterIid(String outerIid) {
-		this.outerIid = outerIid;
-	}
-	
 }

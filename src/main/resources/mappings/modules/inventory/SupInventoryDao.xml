@@ -5,53 +5,45 @@
 	<sql id="supInventoryColumns">
 		a.id AS "id",
 		a.channel_id AS "channelId",
-		a.distribution_rate AS "distributionRate",
 		a.inven_agio AS "invenAgio",
 		a.inven_date AS "invenDate",
 		a.inven_desc AS "invenDesc",
-		a.inven_model AS "invenModel",
-		a.inven_num AS "invenNum",
+		a.inner_product_no AS "innerProductNo",
+		a.inner_size AS "innerSize",
+		a.qty AS "qty",
 		a.inven_price AS "invenPrice",
-		a.inven_size AS "invenSize",
-		a.inven_state AS "invenState",
-		a.ori_size AS "oriSize",
-		a.ori_model AS "oriModel",
+		a.status AS "status",
 		a.standard_size AS "standardSize",
-		a.yunju_product_id AS "yunjuProductId",
 		a.create_by AS "createBy.id",
 		a.create_time AS "createTime",
 		a.update_by AS "updateBy.id",
 		a.update_time AS "updateTime",
-		a.remark AS "remark",
+		a.remarks AS "remarks",
 		a.del_flag AS "delFlag"
 	</sql>
 	
 	<sql id="supInventoryJoins">
 	</sql>
 	
-	<!-- 插入库存 -->
+		<!-- 插入库存 -->
 	<insert id="batchInsert" >
 		INSERT INTO sup_inventory(
 			id,
 			channel_id,
-			distribution_rate,
 			inven_agio,
 			inven_date,
 			inven_desc,
-			inven_model,
-			inven_num,
+			inner_product_no,
+			inner_size,
+			qty,
 			inven_price,
-			inven_size,
-			inven_state,
-			ori_size,
-			ori_model,
+			status,
 			standard_size,
-			yunju_product_id,
 			create_by,
 			create_time,
 			update_by,
 			update_time,
-			remark,
+			remarks,
 			del_flag
 		)
 		 VALUES
@@ -59,24 +51,20 @@
 			(
 			#{item.id},
 			#{item.channelId},
-			#{item.distributionRate},
 			#{item.invenAgio},
 			#{item.invenDate},
 			#{item.invenDesc},
-			#{item.invenModel},
-			#{item.invenNum},
+			#{item.innerProductNo},
+			#{item.innerSize},
+			#{item.qty},
 			#{item.invenPrice},
-			#{item.invenSize},
-			#{item.invenState},
-			#{item.oriSize},
-			#{item.oriModel},
+			#{item.status},
 			#{item.standardSize},
-			#{item.yunjuProductId},
 			#{item.createBy.id},
 			#{item.createTime},
 			#{item.updateBy.id},
 			#{item.updateTime},
-			#{item.remark},
+			#{item.remarks},
 			#{item.delFlag}
 			)
 		</foreach>
@@ -102,11 +90,8 @@
 		<include refid="supInventoryJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="invenModel != null and invenModel != ''">
-				AND a.inven_model LIKE 
-					<if test="dbName == 'oracle'">'%'||#{invenModel}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{invenModel}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{invenModel},'%')</if>
+			<if test="innerProductNo != null and innerProductNo != ''">
+				AND a.inner_product_no = #{innerProductNo}
 			</if>
 		</where>
 		<choose>
@@ -139,46 +124,38 @@
 		INSERT INTO sup_inventory(
 			id,
 			channel_id,
-			distribution_rate,
 			inven_agio,
 			inven_date,
 			inven_desc,
-			inven_model,
-			inven_num,
+			inner_product_no,
+			inner_size,
+			qty,
 			inven_price,
-			inven_size,
-			inven_state,
-			ori_size,
-			ori_model,
+			status,
 			standard_size,
-			yunju_product_id,
 			create_by,
 			create_time,
 			update_by,
 			update_time,
-			remark,
+			remarks,
 			del_flag
 		) VALUES (
 			#{id},
 			#{channelId},
-			#{distributionRate},
 			#{invenAgio},
 			#{invenDate},
 			#{invenDesc},
-			#{invenModel},
-			#{invenNum},
+			#{innerProductNo},
+			#{innerSize},
+			#{qty},
 			#{invenPrice},
-			#{invenSize},
-			#{invenState},
-			#{oriSize},
-			#{oriModel},
+			#{status},
 			#{standardSize},
-			#{yunjuProductId},
 			#{createBy.id},
 			#{createTime},
 			#{updateBy.id},
 			#{updateTime},
-			#{remark},
+			#{remarks},
 			#{delFlag}
 		)
 	</insert>
@@ -186,23 +163,19 @@
 	<update id="update">
 		UPDATE sup_inventory SET 	
 			channel_id = #{channelId},
-			distribution_rate = #{distributionRate},
 			inven_agio = #{invenAgio},
 			inven_date = #{invenDate},
 			inven_desc = #{invenDesc},
-			inven_model = #{invenModel},
-			inven_num = #{invenNum},
+			inner_product_no = #{innerProductNo},
+			inner_size = #{innerSize},
+			qty = #{qty},
 			inven_price = #{invenPrice},
-			inven_size = #{invenSize},
-			inven_state = #{invenState},
-			ori_size = #{oriSize},
-			ori_model = #{oriModel},
+			status = #{status},
 			standard_size = #{standardSize},
-			yunju_product_id = #{yunjuProductId},
 			create_time = #{createTime},
 			update_by = #{updateBy.id},
 			update_time = #{updateTime},
-			remark = #{remark}
+			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
 	

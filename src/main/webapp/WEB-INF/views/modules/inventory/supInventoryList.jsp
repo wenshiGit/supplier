@@ -70,7 +70,7 @@
 		<input id="pageSize" name="pageSize" type="hidden"
 			value="${page.pageSize}" />
 		<ul class="ul-form">
-			<li><label>货号：</label> <form:input path="invenModel"
+			<li><label>货号：</label> <form:input path="innerProductNo"
 					htmlEscape="false" maxlength="50" class="input-medium" /></li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary"
 				type="submit" value="查询" /></li>
@@ -91,7 +91,6 @@
 				<th>代理价</th>
 				<th>折扣</th>
 				<th>所属渠道</th>
-				<th>配货率</th>
 				<th>更新时间</th>
 				<th>操作</th>
 			</tr>
@@ -99,15 +98,14 @@
 		<tbody>
 			<c:forEach items="${page.list}" var="supInventory">
 				<tr>
-					<td>${supInventory.invenModel}</td>
-					<td>${supInventory.invenSize}</td>
-					<td>${supInventory.invenNum}</td>
+					<td>${supInventory.innerProductNo}</td>
+					<td>${supInventory.innerSize}</td>
+					<td>${supInventory.qty}</td>
 					<td>${supInventory.invenPrice}</td>
 					<td>${supInventory.invenAgio}</td>
 					<td>${supInventory.channelId}</td>
-					<td>${supInventory.distributionRate}%</td>
 					<td><fmt:formatDate value="${supInventory.updateTime}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
-					<td><a href="${ctx}/inventory/supInventory/form?id=${supInventory.id}">加入购物车</a>
+					<td><a href="#">加入购物车</a>
 					<%-- <a href="${ctx}/inventory/supInventory/delete?id=${supInventory.id}"
 							onclick="return confirmx('确认要删除该库存管理吗？', this.href)">删除</a> --%>
 					</td>

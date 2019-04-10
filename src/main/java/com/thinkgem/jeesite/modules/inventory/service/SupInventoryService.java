@@ -71,22 +71,21 @@ public class SupInventoryService extends CrudService<SupInventoryDao, SupInvento
 			SupInventory supInven = new SupInventory();
 			
 			supInven.setChannelId(channelId);
-			supInven.setDistributionRate(100);
+//			supInven.setDistributionRate(100);
 			Double tagPrice = Double.valueOf(vo.getTagPrice());
 			Double agentPrice = Double.valueOf(vo.getAgentPrice());
 			BigDecimal invenAgio =  AgioUtil.invenAgio(tagPrice, agentPrice);
 			supInven.setInvenAgio(Double.valueOf(invenAgio+""));//代理折扣
 			supInven.setInvenDate(new Timestamp(new Date().getTime()));
 			supInven.setInvenDesc(vo.getStyleNo());
-			supInven.setInvenModel(vo.getProductNo());
-			supInven.setInvenNum(Integer.valueOf(vo.getQty()));
+//			supInven.setInvenModel(vo.getProductNo());
+//			supInven.setInvenNum(Integer.valueOf(vo.getQty()));
+			supInven.setInnerProductNo(vo.getProductNo());
+			supInven.setInnerSize(vo.getOuSize());
+			supInven.setQty(Integer.valueOf(vo.getQty()));
 			supInven.setInvenPrice(Double.valueOf(vo.getAgentPrice()));
-			supInven.setInvenSize(vo.getOuSize());
-			
-			supInven.setOriModel(vo.getProductNo());
-			supInven.setOriSize(vo.getInnerSize());
-			supInven.setRemark("");
-			supInven.setInvenState("1");
+			supInven.setRemarks("");
+			supInven.setStatus("1");
 			supInven.setId(IdGen.uuid());
 			User user = UserUtils.getUser();
 			if (StringUtils.isNotBlank(user.getId())){

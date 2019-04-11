@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.channel.dao.SupChannelDao">
+    
+	<sql id="supChannelColumns">
+		a.id AS "id",
+		a.channel_name AS "channelName",
+		a.city_id AS "cityId",
+		a.default_agio AS "defaultAgio",
+		a.desc AS "desc",
+		a.commission_agio AS "commissionAgio",
+		a.distribution_desc AS "distributionDesc",
+		a.account_balance AS "accountBalance",
+		a.channel_user_id AS "channelUserId",
+		a.default_express AS "defaultExpress",
+		a.delivery_address AS "deliveryAddress",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="supChannelJoins">
+	</sql>
+    
+	<select id="get" resultType="SupChannel">
+		SELECT 
+			<include refid="supChannelColumns"/>
+		FROM sup_channel a
+		<include refid="supChannelJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SupChannel">
+		SELECT 
+			<include refid="supChannelColumns"/>
+		FROM sup_channel a
+		<include refid="supChannelJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="channelName != null and channelName != ''">
+				AND a.channel_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{channelName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{channelName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{channelName},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SupChannel">
+		SELECT 
+			<include refid="supChannelColumns"/>
+		FROM sup_channel a
+		<include refid="supChannelJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sup_channel(
+			id,
+			channel_name,
+			city_id,
+			default_agio,
+			desc,
+			commission_agio,
+			distribution_desc,
+			account_balance,
+			channel_user_id,
+			default_express,
+			delivery_address,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{channelName},
+			#{cityId},
+			#{defaultAgio},
+			#{desc},
+			#{commissionAgio},
+			#{distributionDesc},
+			#{accountBalance},
+			#{channelUserId},
+			#{defaultExpress},
+			#{deliveryAddress},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sup_channel SET 	
+			channel_name = #{channelName},
+			city_id = #{cityId},
+			default_agio = #{defaultAgio},
+			desc = #{desc},
+			commission_agio = #{commissionAgio},
+			distribution_desc = #{distributionDesc},
+			account_balance = #{accountBalance},
+			channel_user_id = #{channelUserId},
+			default_express = #{defaultExpress},
+			delivery_address = #{deliveryAddress},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sup_channel SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

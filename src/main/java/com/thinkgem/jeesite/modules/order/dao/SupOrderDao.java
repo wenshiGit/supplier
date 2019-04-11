@@ -10,7 +10,7 @@ import com.thinkgem.jeesite.modules.order.entity.SupOrder;
 /**
  * 订单管理DAO接口
  * @author ZiruiSong
- * @version 2019-04-10
+ * @version 2019-04-11
  */
 @MyBatisDao
 public interface SupOrderDao extends CrudDao<SupOrder> {

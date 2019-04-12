@@ -55,7 +55,7 @@
 		<div class="control-group">
 			<label class="control-label">渠道描述：</label>
 			<div class="controls">
-				<form:input path="desc" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="channelDesc" htmlEscape="false" maxlength="255" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>渠道管理管理</title>
+	<title>渠道管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -18,8 +18,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/channel/supChannel/">渠道管理列表</a></li>
-		<shiro:hasPermission name="channel:supChannel:edit"><li><a href="${ctx}/channel/supChannel/form">渠道管理添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/channel/supChannel/">渠道列表</a></li>
+		<shiro:hasPermission name="channel:supChannel:edit"><li><a href="${ctx}/channel/supChannel/form">添加渠道</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="supChannel" action="${ctx}/channel/supChannel/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -36,24 +36,28 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>修改时间</th>
-				<th>备注</th>
-				<shiro:hasPermission name="channel:supChannel:edit"><th>操作</th></shiro:hasPermission>
+				<th>渠道名称</th>
+				<th>所在城市</th>
+				<th>默认折扣</th>
+				<th>描述</th>
+				<th>抽成折扣</th>
+				<th>配货说明</th>
+				<th>账户余额</th>
+				<th>默认发货快递</th>
+				<th>发货地</th>
+				<th>状态</th>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="supChannel">
 			<tr>
-				<td><a href="${ctx}/channel/supChannel/form?id=${supChannel.id}">
-					<fmt:formatDate value="${supChannel.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</a></td>
+				<td>${supChannel.channelName}</td>
+				<td>${supChannel.remarks}</td>
 				<td>
-					${supChannel.remarks}
-				</td>
-				<shiro:hasPermission name="channel:supChannel:edit"><td>
     				<a href="${ctx}/channel/supChannel/form?id=${supChannel.id}">修改</a>
 					<a href="${ctx}/channel/supChannel/delete?id=${supChannel.id}" onclick="return confirmx('确认要删除该渠道管理吗？', this.href)">删除</a>
-				</td></shiro:hasPermission>
+				</td>
 			</tr>
 		</c:forEach>
 		</tbody>

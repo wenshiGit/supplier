@@ -18,7 +18,7 @@ public class SupChannel extends DataEntity<SupChannel> {
 	private String channelName;		// 渠道名称
 	private String cityId;		// 所在城市
 	private Double defaultAgio;		// 渠道默认折扣
-	private String desc;		// 渠道描述
+	private String channelDesc;		// 渠道描述
 	private Double commissionAgio;		// 抽成折扣
 	private String distributionDesc;		// 配货说明
 	private Double accountBalance;		// 账户余额
@@ -62,12 +62,12 @@ public class SupChannel extends DataEntity<SupChannel> {
 	}
 	
 	@Length(min=0, max=255, message="渠道描述长度必须介于 0 和 255 之间")
-	public String getDesc() {
-		return desc;
+	public String getchannelDesc() {
+		return channelDesc;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setChannelDesc(String channelDesc) {
+		this.channelDesc = channelDesc;
 	}
 	
 	public Double getCommissionAgio() {

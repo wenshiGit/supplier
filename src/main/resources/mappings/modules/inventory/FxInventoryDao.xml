@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.inventory.dao.FxInventoryDao">
+
+	<sql id="fxInventoryColumns">
+		a.inven_id AS "invenId",
+		a.channel_id AS "channelId",
+		a.distribution_rate AS "distributionRate",
+		a.inven_agio AS "invenAgio",
+		a.inven_date AS "invenDate",
+		a.inven_desc AS "invenDesc",
+		a.inven_model
+		AS "invenModel",
+		a.inven_num AS "invenNum",
+		a.inven_price AS
+		"invenPrice",
+		a.inven_size AS "invenSize",
+		a.inven_state AS
+		"invenState",
+		a.ori_size AS "oriSize",
+		a.ori_model AS "oriModel",
+		a.standard_size AS "standardSize",
+		a.yunju_product_id AS
+		"yunjuProductId"
+	</sql>
+
+	<sql id="fxInventoryJoins">
+	</sql>
+
+	<select id="get" resultType="FxInventory">
+		SELECT
+		<include refid="fxInventoryColumns" />
+		FROM fx_inventory a
+		<include refid="fxInventoryJoins" />
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="findList" resultType="FxInventory">
+		SELECT
+		<include refid="fxInventoryColumns" />
+		FROM fx_inventory a
+		<include refid="fxInventoryJoins" />
+		<where>
+
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllList" resultType="FxInventory">
+		SELECT
+		<include refid="fxInventoryColumns" />
+		FROM fx_inventory a
+		<include refid="fxInventoryJoins" />
+		<where>
+
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO fx_inventory(
+		inven_id,
+		channel_id,
+		distribution_rate,
+		inven_agio,
+		inven_date,
+		inven_desc,
+		inven_model,
+		inven_num,
+		inven_price,
+		inven_size,
+		inven_state,
+		ori_size,
+		ori_model,
+		standard_size,
+		yunju_product_id
+		) VALUES (
+		#{invenId},
+		#{channelId},
+		#{distributionRate},
+		#{invenAgio},
+		#{invenDate},
+		#{invenDesc},
+		#{invenModel},
+		#{invenNum},
+		#{invenPrice},
+		#{invenSize},
+		#{invenState},
+		#{oriSize},
+		#{oriModel},
+		#{standardSize},
+		#{yunjuProductId}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE fx_inventory SET
+		inven_id = #{invenId},
+		channel_id = #{channelId},
+		distribution_rate = #{distributionRate},
+		inven_agio = #{invenAgio},
+		inven_date = #{invenDate},
+		inven_desc =
+		#{invenDesc},
+		inven_model = #{invenModel},
+		inven_num = #{invenNum},
+		inven_price = #{invenPrice},
+		inven_size = #{invenSize},
+		inven_state =
+		#{invenState},
+		ori_size = #{oriSize},
+		ori_model = #{oriModel},
+		standard_size = #{standardSize},
+		yunju_product_id = #{yunjuProductId}
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+		DELETE FROM fx_inventory
+		WHERE id = #{id}
+	</update>
+
+	<insert id="importDataToTable">
+		INSERT into
+		fx_inventory(channel_id,inven_model,inven_size,ori_size,inven_num,inven_agio,inven_date,inven_state,ori_model,inven_price)
+		SELECT channel_id,inven_model,inven_size,ori_size,SUM(inven_num)
+		inven_num,inven_agio,inven_date,inven_state,ori_model,inven_price FROM
+		fx_inventory_tmp_deal
+		where channel_id=#{channelId}
+		<if test="impType != null and imType eq '1'">
+			and not EXISTS (select
+			a.inven_model,a.ori_size
+			From
+			fx_inventory a,
+			(
+			select
+			a.inven_model,a.ori_size
+			from
+			fx_inventory_tmp_deal a
+			where channel_id = #{channelId}
+			group by
+			a.inven_model,a.ori_size
+			) b
+			where a.inven_model = b.inven_model
+			and
+			a.ori_size = b.ori_size
+			and a.channel_id = #{channelId}
+			)
+		</if>
+
+		GROUP BY channel_id,inven_model,inven_size,ori_size,ori_model
+	</insert>
+
+
+	<update id="importDataByAdd">
+		update fx_inventory aa,
+		(select
+		IFNULL(a.inven_num,0)+ IFNULL(inven_num_sum,0) sumtotal,
+		a.inven_model,a.ori_size
+		From fx_inventory a,
+		(
+		select
+		sum(ifnull(a.inven_num,0)) inven_num_sum
+		,a.inven_model,a.ori_size
+		from
+		fx_inventory_tmp_deal a
+		where channel_id = #{channelId}
+		group by a.inven_model,a.ori_size
+		) b
+		where a.inven_model = b.inven_model
+		and a.ori_size = b.ori_size
+		and a.channel_id = #{channelId}
+		) bb set aa.inven_num =bb.sumtotal
+		where aa.inven_model = bb.inven_model
+		and aa.ori_size = bb.ori_size
+		and aa.channel_id =#{channelId}
+	</update>
+	
+	<delete id="deleteDataToTemp">
+	 delete from fx_inventory_tmp_deal where channel_id = #{channelId}
+	</delete>
+	
+	<delete id="deleteDataToFxInventory">
+	 delete from fx_inventory where channel_id = #{channelId}
+	</delete>
+</mapper>

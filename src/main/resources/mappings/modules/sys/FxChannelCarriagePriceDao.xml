@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.FxChannelCarriagePriceDao">
+    
+	<sql id="fxChannelCarriagePriceColumns">
+		a.id AS "id",
+		a.first_weight AS "firstWeight",
+		a.add_weight AS "addWeight",
+		a.carr_price_first AS "carrPriceFirst",
+		a.carr_price_add AS "carrPriceAdd",
+		a.province_id AS "provinceId",
+		a.carr_id AS "carrId",
+		a.channel_id AS "channelId",
+		a.create_time AS "createTime"
+	</sql>
+	
+	<sql id="fxChannelCarriagePriceJoins">
+	</sql>
+    
+	<select id="get" resultType="FxChannelCarriagePrice">
+		SELECT 
+			<include refid="fxChannelCarriagePriceColumns"/>
+		FROM fx_channel_carriage_price a
+		<include refid="fxChannelCarriagePriceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxChannelCarriagePrice">
+		SELECT 
+			<include refid="fxChannelCarriagePriceColumns"/>
+		FROM fx_channel_carriage_price a
+		<include refid="fxChannelCarriagePriceJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxChannelCarriagePrice">
+		SELECT 
+			<include refid="fxChannelCarriagePriceColumns"/>
+		FROM fx_channel_carriage_price a
+		<include refid="fxChannelCarriagePriceJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_channel_carriage_price(
+			id,
+			first_weight,
+			add_weight,
+			carr_price_first,
+			carr_price_add,
+			province_id,
+			carr_id,
+			channel_id,
+			create_time
+		) VALUES (
+			#{id},
+			#{firstWeight},
+			#{addWeight},
+			#{carrPriceFirst},
+			#{carrPriceAdd},
+			#{provinceId},
+			#{carrId},
+			#{channelId},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_channel_carriage_price SET 	
+			first_weight = #{firstWeight},
+			add_weight = #{addWeight},
+			carr_price_first = #{carrPriceFirst},
+			carr_price_add = #{carrPriceAdd},
+			province_id = #{provinceId},
+			carr_id = #{carrId},
+			channel_id = #{channelId},
+			create_time = #{createTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_channel_carriage_price
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

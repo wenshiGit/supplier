@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.FxCfgAutoTransferDao">
+    
+	<sql id="fxCfgAutoTransferColumns">
+		a.channel_id AS "channelId",
+		a.rule_name AS "ruleName",
+		a.rule_value AS "ruleValue"
+	</sql>
+	
+	<sql id="fxCfgAutoTransferJoins">
+	</sql>
+    
+	<select id="get" resultType="FxCfgAutoTransfer">
+		SELECT 
+			<include refid="fxCfgAutoTransferColumns"/>
+		FROM fx_cfg_auto_transfer a
+		<include refid="fxCfgAutoTransferJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxCfgAutoTransfer">
+		SELECT 
+			<include refid="fxCfgAutoTransferColumns"/>
+		FROM fx_cfg_auto_transfer a
+		<include refid="fxCfgAutoTransferJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxCfgAutoTransfer">
+		SELECT 
+			<include refid="fxCfgAutoTransferColumns"/>
+		FROM fx_cfg_auto_transfer a
+		<include refid="fxCfgAutoTransferJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_cfg_auto_transfer(
+			channel_id,
+			rule_name,
+			rule_value
+		) VALUES (
+			#{channelId},
+			#{ruleName},
+			#{ruleValue}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_cfg_auto_transfer SET 	
+			channel_id = #{channelId},
+			rule_name = #{ruleName},
+			rule_value = #{ruleValue}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_cfg_auto_transfer
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

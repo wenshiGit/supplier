@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.finance.dao.FxBillAccountDao">
+    
+	<sql id="fxBillAccountColumns">
+		a.account_id AS "accountId",
+		a.account_name AS "accountName",
+		a.account_code AS "accountCode",
+		a.account_type AS "accountType",
+		a.related_order AS "relatedOrder",
+		a.status AS "status",
+		a.gmt_create AS "gmtCreate",
+		a.gmt_modified AS "gmtModified"
+	</sql>
+	
+	<sql id="fxBillAccountJoins">
+	</sql>
+    
+	<select id="get" resultType="FxBillAccount">
+		SELECT 
+			<include refid="fxBillAccountColumns"/>
+		FROM fx_bill_account a
+		<include refid="fxBillAccountJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxBillAccount">
+		SELECT 
+			<include refid="fxBillAccountColumns"/>
+		FROM fx_bill_account a
+		<include refid="fxBillAccountJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxBillAccount">
+		SELECT 
+			<include refid="fxBillAccountColumns"/>
+		FROM fx_bill_account a
+		<include refid="fxBillAccountJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_bill_account(
+			account_id,
+			account_name,
+			account_code,
+			account_type,
+			related_order,
+			status,
+			gmt_create,
+			gmt_modified
+		) VALUES (
+			#{accountId},
+			#{accountName},
+			#{accountCode},
+			#{accountType},
+			#{relatedOrder},
+			#{status},
+			#{gmtCreate},
+			#{gmtModified}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_bill_account SET 	
+			account_id = #{accountId},
+			account_name = #{accountName},
+			account_code = #{accountCode},
+			account_type = #{accountType},
+			related_order = #{relatedOrder},
+			status = #{status},
+			gmt_create = #{gmtCreate},
+			gmt_modified = #{gmtModified}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_bill_account
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

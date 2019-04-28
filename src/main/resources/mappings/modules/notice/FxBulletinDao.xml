@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.notice.dao.FxBulletinDao">
+    
+	<sql id="fxBulletinColumns">
+		a.info_nbr AS "infoNbr",
+		a.bulletin_content AS "bulletinContent",
+		a.bulletin_title AS "bulletinTitle",
+		a.channel_id AS "channelId",
+		a.create_time AS "createTime",
+		a.file_name AS "fileName",
+		a.is_top AS "isTop",
+		a.re_name AS "reName",
+		a.read_state AS "readState",
+		a.state AS "state",
+		a.type AS "type",
+		a.user_id AS "user.id",
+		u12.name AS "user.name"
+	</sql>
+	
+	<sql id="fxBulletinJoins">
+		LEFT JOIN sys_user u12 ON u12.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="FxBulletin">
+		SELECT 
+			<include refid="fxBulletinColumns"/>
+		FROM fx_bulletin a
+		<include refid="fxBulletinJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxBulletin">
+		SELECT 
+			<include refid="fxBulletinColumns"/>
+		FROM fx_bulletin a
+		<include refid="fxBulletinJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxBulletin">
+		SELECT 
+			<include refid="fxBulletinColumns"/>
+		FROM fx_bulletin a
+		<include refid="fxBulletinJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_bulletin(
+			info_nbr,
+			bulletin_content,
+			bulletin_title,
+			channel_id,
+			create_time,
+			file_name,
+			is_top,
+			re_name,
+			read_state,
+			state,
+			type,
+			user_id
+		) VALUES (
+			#{infoNbr},
+			#{bulletinContent},
+			#{bulletinTitle},
+			#{channelId},
+			#{createTime},
+			#{fileName},
+			#{isTop},
+			#{reName},
+			#{readState},
+			#{state},
+			#{type},
+			#{user.id}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_bulletin SET 	
+			info_nbr = #{infoNbr},
+			bulletin_content = #{bulletinContent},
+			bulletin_title = #{bulletinTitle},
+			channel_id = #{channelId},
+			create_time = #{createTime},
+			file_name = #{fileName},
+			is_top = #{isTop},
+			re_name = #{reName},
+			read_state = #{readState},
+			state = #{state},
+			type = #{type},
+			user_id = #{user.id}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_bulletin
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

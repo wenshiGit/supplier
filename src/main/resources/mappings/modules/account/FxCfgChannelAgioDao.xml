@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.account.dao.FxCfgChannelAgioDao">
+    
+	<sql id="fxCfgChannelAgioColumns">
+		a.channel_id AS "channelId",
+		a.brand_id AS "brandId",
+		a.real_agio AS "realAgio",
+		a.gender_id AS "genderId",
+		a.season_id AS "seasonId",
+		a.goods_type_id AS "goodsTypeId",
+		a.create_time AS "createTime",
+		a.modify_time AS "modifyTime",
+		a.state AS "state",
+		a.proxy_self_agio AS "proxySelfAgio"
+	</sql>
+	
+	<sql id="fxCfgChannelAgioJoins">
+	</sql>
+    
+	<select id="get" resultType="FxCfgChannelAgio">
+		SELECT 
+			<include refid="fxCfgChannelAgioColumns"/>
+		FROM fx_cfg_channel_agio a
+		<include refid="fxCfgChannelAgioJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxCfgChannelAgio">
+		SELECT 
+			<include refid="fxCfgChannelAgioColumns"/>
+		FROM fx_cfg_channel_agio a
+		<include refid="fxCfgChannelAgioJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxCfgChannelAgio">
+		SELECT 
+			<include refid="fxCfgChannelAgioColumns"/>
+		FROM fx_cfg_channel_agio a
+		<include refid="fxCfgChannelAgioJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_cfg_channel_agio(
+			channel_id,
+			brand_id,
+			real_agio,
+			gender_id,
+			season_id,
+			goods_type_id,
+			create_time,
+			modify_time,
+			state,
+			proxy_self_agio
+		) VALUES (
+			#{channelId},
+			#{brandId},
+			#{realAgio},
+			#{genderId},
+			#{seasonId},
+			#{goodsTypeId},
+			#{createTime},
+			#{modifyTime},
+			#{state},
+			#{proxySelfAgio}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_cfg_channel_agio SET 	
+			channel_id = #{channelId},
+			brand_id = #{brandId},
+			real_agio = #{realAgio},
+			gender_id = #{genderId},
+			season_id = #{seasonId},
+			goods_type_id = #{goodsTypeId},
+			create_time = #{createTime},
+			modify_time = #{modifyTime},
+			state = #{state},
+			proxy_self_agio = #{proxySelfAgio}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_cfg_channel_agio
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

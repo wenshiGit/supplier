@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.FxCarriageDao">
+    
+	<sql id="fxCarriageColumns">
+		a.carr_id AS "carrId",
+		a.carr_desc AS "carrDesc",
+		a.carr_id_jd AS "carrIdJd",
+		a.carr_id_taobao AS "carrIdTaobao",
+		a.carr_name AS "carrName",
+		a.create_time AS "createTime",
+		a.order_cnt AS "orderCnt",
+		a.carr_price AS "carrPrice",
+		a.carr_price_add AS "carrPriceAdd"
+	</sql>
+	
+	<sql id="fxCarriageJoins">
+	</sql>
+    
+	<select id="get" resultType="FxCarriage">
+		SELECT 
+			<include refid="fxCarriageColumns"/>
+		FROM fx_carriage a
+		<include refid="fxCarriageJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxCarriage">
+		SELECT 
+			<include refid="fxCarriageColumns"/>
+		FROM fx_carriage a
+		<include refid="fxCarriageJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxCarriage">
+		SELECT 
+			<include refid="fxCarriageColumns"/>
+		FROM fx_carriage a
+		<include refid="fxCarriageJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_carriage(
+			carr_id,
+			carr_desc,
+			carr_id_jd,
+			carr_id_taobao,
+			carr_name,
+			create_time,
+			order_cnt,
+			carr_price,
+			carr_price_add
+		) VALUES (
+			#{carrId},
+			#{carrDesc},
+			#{carrIdJd},
+			#{carrIdTaobao},
+			#{carrName},
+			#{createTime},
+			#{orderCnt},
+			#{carrPrice},
+			#{carrPriceAdd}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_carriage SET 	
+			carr_id = #{carrId},
+			carr_desc = #{carrDesc},
+			carr_id_jd = #{carrIdJd},
+			carr_id_taobao = #{carrIdTaobao},
+			carr_name = #{carrName},
+			create_time = #{createTime},
+			order_cnt = #{orderCnt},
+			carr_price = #{carrPrice},
+			carr_price_add = #{carrPriceAdd}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_carriage
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

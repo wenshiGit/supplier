@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.finance.dao.FxOrdersTaobaoDao">
+    
+	<sql id="fxOrdersTaobaoColumns">
+		a.user_id AS "user.id",
+		a.shop_id AS "shopId",
+		a.tid AS "tid",
+		a.numiid AS "numiid",
+		a.sku_id AS "skuId",
+		a.created_time AS "createdTime",
+		a.title AS "title",
+		a.brand AS "brand",
+		a.goods_nbr AS "goodsNbr",
+		a.goods_size AS "goodsSize",
+		a.goods_count AS "goodsCount",
+		a.goods_price AS "goodsPrice",
+		a.goods_price_org AS "goodsPriceOrg",
+		a.cust_name AS "custName",
+		a.cust_addr AS "custAddr",
+		a.cust_tel AS "custTel",
+		a.ems_comp AS "emsComp",
+		a.ems_price AS "emsPrice",
+		a.remark_buy AS "remarkBuy",
+		a.remark_sell AS "remarkSell",
+		a.remark_color AS "remarkColor",
+		a.download_time AS "downloadTime",
+		a.buyer_nick AS "buyerNick",
+		a.is_export AS "isExport",
+		a.is_fahuo AS "isFahuo",
+		a.ems_id AS "emsId",
+		a.error_msg AS "errorMsg",
+		a.channel_name AS "channelName",
+		a.kefu_user_name AS "kefuUserName",
+		a.goods_type_name AS "goodsTypeName",
+		a.sex AS "sex",
+		a.goods_size_trans AS "goodsSizeTrans",
+		a.state AS "state",
+		a.order_remark AS "orderRemark",
+		a.origin AS "origin",
+		a.batch_id AS "batchId",
+		a.order_id AS "orderId",
+		a.province_id AS "provinceId",
+		a.city_name AS "cityName",
+		a.city_id AS "cityId",
+		a.country_name AS "countryName",
+		a.country_id AS "countryId",
+		a.province_name AS "provinceName",
+		a.ems_comp_ori AS "emsCompOri",
+		a.taobao_order_price AS "taobaoOrderPrice",
+		a.post_fee AS "postFee",
+		a.order_sum_price AS "orderSumPrice",
+		a.total_fee AS "totalFee",
+		a.adjust_fee AS "adjustFee",
+		a.part_mjz_discount AS "partMjzDiscount",
+		a.divide_order_fee AS "divideOrderFee",
+		a.payment AS "payment",
+		a.price AS "price",
+		a.discount_fee AS "discountFee",
+		a.logistics_type AS "logisticsType",
+		u1.name AS "user.name"
+	</sql>
+	
+	<sql id="fxOrdersTaobaoJoins">
+		LEFT JOIN sys_user u1 ON u1.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="FxOrdersTaobao">
+		SELECT 
+			<include refid="fxOrdersTaobaoColumns"/>
+		FROM fx_orders_taobao a
+		<include refid="fxOrdersTaobaoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxOrdersTaobao">
+		SELECT 
+			<include refid="fxOrdersTaobaoColumns"/>
+		FROM fx_orders_taobao a
+		<include refid="fxOrdersTaobaoJoins"/>
+		<where>
+			
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxOrdersTaobao">
+		SELECT 
+			<include refid="fxOrdersTaobaoColumns"/>
+		FROM fx_orders_taobao a
+		<include refid="fxOrdersTaobaoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_orders_taobao(
+			user_id,
+			shop_id,
+			tid,
+			numiid,
+			sku_id,
+			created_time,
+			title,
+			brand,
+			goods_nbr,
+			goods_size,
+			goods_count,
+			goods_price,
+			goods_price_org,
+			cust_name,
+			cust_addr,
+			cust_tel,
+			ems_comp,
+			ems_price,
+			remark_buy,
+			remark_sell,
+			remark_color,
+			download_time,
+			buyer_nick,
+			is_export,
+			is_fahuo,
+			ems_id,
+			error_msg,
+			channel_name,
+			kefu_user_name,
+			goods_type_name,
+			sex,
+			goods_size_trans,
+			state,
+			order_remark,
+			origin,
+			batch_id,
+			order_id,
+			province_id,
+			city_name,
+			city_id,
+			country_name,
+			country_id,
+			province_name,
+			ems_comp_ori,
+			taobao_order_price,
+			post_fee,
+			order_sum_price,
+			total_fee,
+			adjust_fee,
+			part_mjz_discount,
+			divide_order_fee,
+			payment,
+			price,
+			discount_fee,
+			logistics_type
+		) VALUES (
+			#{user.id},
+			#{shopId},
+			#{tid},
+			#{numiid},
+			#{skuId},
+			#{createdTime},
+			#{title},
+			#{brand},
+			#{goodsNbr},
+			#{goodsSize},
+			#{goodsCount},
+			#{goodsPrice},
+			#{goodsPriceOrg},
+			#{custName},
+			#{custAddr},
+			#{custTel},
+			#{emsComp},
+			#{emsPrice},
+			#{remarkBuy},
+			#{remarkSell},
+			#{remarkColor},
+			#{downloadTime},
+			#{buyerNick},
+			#{isExport},
+			#{isFahuo},
+			#{emsId},
+			#{errorMsg},
+			#{channelName},
+			#{kefuUserName},
+			#{goodsTypeName},
+			#{sex},
+			#{goodsSizeTrans},
+			#{state},
+			#{orderRemark},
+			#{origin},
+			#{batchId},
+			#{orderId},
+			#{provinceId},
+			#{cityName},
+			#{cityId},
+			#{countryName},
+			#{countryId},
+			#{provinceName},
+			#{emsCompOri},
+			#{taobaoOrderPrice},
+			#{postFee},
+			#{orderSumPrice},
+			#{totalFee},
+			#{adjustFee},
+			#{partMjzDiscount},
+			#{divideOrderFee},
+			#{payment},
+			#{price},
+			#{discountFee},
+			#{logisticsType}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_orders_taobao SET 	
+			user_id = #{user.id},
+			shop_id = #{shopId},
+			tid = #{tid},
+			numiid = #{numiid},
+			sku_id = #{skuId},
+			created_time = #{createdTime},
+			title = #{title},
+			brand = #{brand},
+			goods_nbr = #{goodsNbr},
+			goods_size = #{goodsSize},
+			goods_count = #{goodsCount},
+			goods_price = #{goodsPrice},
+			goods_price_org = #{goodsPriceOrg},
+			cust_name = #{custName},
+			cust_addr = #{custAddr},
+			cust_tel = #{custTel},
+			ems_comp = #{emsComp},
+			ems_price = #{emsPrice},
+			remark_buy = #{remarkBuy},
+			remark_sell = #{remarkSell},
+			remark_color = #{remarkColor},
+			download_time = #{downloadTime},
+			buyer_nick = #{buyerNick},
+			is_export = #{isExport},
+			is_fahuo = #{isFahuo},
+			ems_id = #{emsId},
+			error_msg = #{errorMsg},
+			channel_name = #{channelName},
+			kefu_user_name = #{kefuUserName},
+			goods_type_name = #{goodsTypeName},
+			sex = #{sex},
+			goods_size_trans = #{goodsSizeTrans},
+			state = #{state},
+			order_remark = #{orderRemark},
+			origin = #{origin},
+			batch_id = #{batchId},
+			order_id = #{orderId},
+			province_id = #{provinceId},
+			city_name = #{cityName},
+			city_id = #{cityId},
+			country_name = #{countryName},
+			country_id = #{countryId},
+			province_name = #{provinceName},
+			ems_comp_ori = #{emsCompOri},
+			taobao_order_price = #{taobaoOrderPrice},
+			post_fee = #{postFee},
+			order_sum_price = #{orderSumPrice},
+			total_fee = #{totalFee},
+			adjust_fee = #{adjustFee},
+			part_mjz_discount = #{partMjzDiscount},
+			divide_order_fee = #{divideOrderFee},
+			payment = #{payment},
+			price = #{price},
+			discount_fee = #{discountFee},
+			logistics_type = #{logisticsType}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_orders_taobao
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

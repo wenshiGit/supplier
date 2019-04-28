@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.FxUsersMoneyAuditDao">
+    
+	<sql id="fxUsersMoneyAuditColumns">
+		a.withdrawals_id AS "withdrawalsId",
+		a.withdrawals_money AS "withdrawalsMoney",
+		a.withdrawals_user_id AS "withdrawalsUserId",
+		a.withdrawals_user_name AS "withdrawalsUserName",
+		a.withdrawals_add_date AS "withdrawalsAddDate",
+		a.withdrawals_modify_date AS "withdrawalsModifyDate",
+		a.withdrawals_state AS "withdrawalsState",
+		a.withdrawals_modify_user_id AS "withdrawalsModifyUserId",
+		a.withdrawals_modify_user_name AS "withdrawalsModifyUserName",
+		a.withdrawals_desc AS "withdrawalsDesc",
+		a.withdrawals_fact_money AS "withdrawalsFactMoney",
+		a.withdrawals_order_num AS "withdrawalsOrderNum",
+		a.withdrawals_tborder_state AS "withdrawalsTborderState",
+		a.withdrawals_url AS "withdrawalsUrl",
+		a.withdrawals_remark AS "withdrawalsRemark",
+		a.pay_no AS "payNo",
+		a.pay_name AS "payName"
+	</sql>
+	
+	<sql id="fxUsersMoneyAuditJoins">
+	</sql>
+    
+	<select id="get" resultType="FxUsersMoneyAudit">
+		SELECT 
+			<include refid="fxUsersMoneyAuditColumns"/>
+		FROM fx_users_money_audit a
+		<include refid="fxUsersMoneyAuditJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxUsersMoneyAudit">
+		SELECT 
+			<include refid="fxUsersMoneyAuditColumns"/>
+		FROM fx_users_money_audit a
+		<include refid="fxUsersMoneyAuditJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxUsersMoneyAudit">
+		SELECT 
+			<include refid="fxUsersMoneyAuditColumns"/>
+		FROM fx_users_money_audit a
+		<include refid="fxUsersMoneyAuditJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_users_money_audit(
+			withdrawals_id,
+			withdrawals_money,
+			withdrawals_user_id,
+			withdrawals_user_name,
+			withdrawals_add_date,
+			withdrawals_modify_date,
+			withdrawals_state,
+			withdrawals_modify_user_id,
+			withdrawals_modify_user_name,
+			withdrawals_desc,
+			withdrawals_fact_money,
+			withdrawals_order_num,
+			withdrawals_tborder_state,
+			withdrawals_url,
+			withdrawals_remark,
+			pay_no,
+			pay_name
+		) VALUES (
+			#{withdrawalsId},
+			#{withdrawalsMoney},
+			#{withdrawalsUserId},
+			#{withdrawalsUserName},
+			#{withdrawalsAddDate},
+			#{withdrawalsModifyDate},
+			#{withdrawalsState},
+			#{withdrawalsModifyUserId},
+			#{withdrawalsModifyUserName},
+			#{withdrawalsDesc},
+			#{withdrawalsFactMoney},
+			#{withdrawalsOrderNum},
+			#{withdrawalsTborderState},
+			#{withdrawalsUrl},
+			#{withdrawalsRemark},
+			#{payNo},
+			#{payName}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_users_money_audit SET 	
+			withdrawals_id = #{withdrawalsId},
+			withdrawals_money = #{withdrawalsMoney},
+			withdrawals_user_id = #{withdrawalsUserId},
+			withdrawals_user_name = #{withdrawalsUserName},
+			withdrawals_add_date = #{withdrawalsAddDate},
+			withdrawals_modify_date = #{withdrawalsModifyDate},
+			withdrawals_state = #{withdrawalsState},
+			withdrawals_modify_user_id = #{withdrawalsModifyUserId},
+			withdrawals_modify_user_name = #{withdrawalsModifyUserName},
+			withdrawals_desc = #{withdrawalsDesc},
+			withdrawals_fact_money = #{withdrawalsFactMoney},
+			withdrawals_order_num = #{withdrawalsOrderNum},
+			withdrawals_tborder_state = #{withdrawalsTborderState},
+			withdrawals_url = #{withdrawalsUrl},
+			withdrawals_remark = #{withdrawalsRemark},
+			pay_no = #{payNo},
+			pay_name = #{payName}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_users_money_audit
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

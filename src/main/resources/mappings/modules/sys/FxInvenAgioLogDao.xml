@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.FxInvenAgioLogDao">
+    
+	<sql id="fxInvenAgioLogColumns">
+		a.log_id AS "logId",
+		a.inven_model AS "invenModel",
+		a.channel_id AS "channelId",
+		a.inven_agio AS "invenAgio",
+		a.created_time AS "createdTime",
+		a.state AS "state",
+		a.import_person AS "importPerson",
+		a.cost_agio AS "costAgio"
+	</sql>
+	
+	<sql id="fxInvenAgioLogJoins">
+	</sql>
+    
+	<select id="get" resultType="FxInvenAgioLog">
+		SELECT 
+			<include refid="fxInvenAgioLogColumns"/>
+		FROM fx_inven_agio_log a
+		<include refid="fxInvenAgioLogJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxInvenAgioLog">
+		SELECT 
+			<include refid="fxInvenAgioLogColumns"/>
+		FROM fx_inven_agio_log a
+		<include refid="fxInvenAgioLogJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxInvenAgioLog">
+		SELECT 
+			<include refid="fxInvenAgioLogColumns"/>
+		FROM fx_inven_agio_log a
+		<include refid="fxInvenAgioLogJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_inven_agio_log(
+			log_id,
+			inven_model,
+			channel_id,
+			inven_agio,
+			created_time,
+			state,
+			import_person,
+			cost_agio
+		) VALUES (
+			#{logId},
+			#{invenModel},
+			#{channelId},
+			#{invenAgio},
+			#{createdTime},
+			#{state},
+			#{importPerson},
+			#{costAgio}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_inven_agio_log SET 	
+			log_id = #{logId},
+			inven_model = #{invenModel},
+			channel_id = #{channelId},
+			inven_agio = #{invenAgio},
+			created_time = #{createdTime},
+			state = #{state},
+			import_person = #{importPerson},
+			cost_agio = #{costAgio}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_inven_agio_log
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

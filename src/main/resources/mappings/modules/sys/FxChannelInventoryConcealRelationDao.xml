@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.FxChannelInventoryConcealRelationDao">
+    
+	<sql id="fxChannelInventoryConcealRelationColumns">
+		a.conceal_rule_id AS "concealRuleId",
+		a.conceal_state AS "concealState",
+		a.create_time AS "createTime",
+		a.inven_model AS "invenModel",
+		a.rule_type AS "ruleType",
+		a.channel_id AS "channelId"
+	</sql>
+	
+	<sql id="fxChannelInventoryConcealRelationJoins">
+	</sql>
+    
+	<select id="get" resultType="FxChannelInventoryConcealRelation">
+		SELECT 
+			<include refid="fxChannelInventoryConcealRelationColumns"/>
+		FROM fx_channel_inventory_conceal_relation a
+		<include refid="fxChannelInventoryConcealRelationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxChannelInventoryConcealRelation">
+		SELECT 
+			<include refid="fxChannelInventoryConcealRelationColumns"/>
+		FROM fx_channel_inventory_conceal_relation a
+		<include refid="fxChannelInventoryConcealRelationJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxChannelInventoryConcealRelation">
+		SELECT 
+			<include refid="fxChannelInventoryConcealRelationColumns"/>
+		FROM fx_channel_inventory_conceal_relation a
+		<include refid="fxChannelInventoryConcealRelationJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_channel_inventory_conceal_relation(
+			conceal_rule_id,
+			conceal_state,
+			create_time,
+			inven_model,
+			rule_type,
+			channel_id
+		) VALUES (
+			#{concealRuleId},
+			#{concealState},
+			#{createTime},
+			#{invenModel},
+			#{ruleType},
+			#{channelId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_channel_inventory_conceal_relation SET 	
+			conceal_rule_id = #{concealRuleId},
+			conceal_state = #{concealState},
+			create_time = #{createTime},
+			inven_model = #{invenModel},
+			rule_type = #{ruleType},
+			channel_id = #{channelId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_channel_inventory_conceal_relation
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

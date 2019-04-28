@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.distribution.dao.FxOrdersExportDao">
+    
+	<sql id="fxOrdersExportColumns">
+		a.order_id AS "orderId",
+		a.abn_state AS "abnState",
+		a.api_order_id AS "apiOrderId",
+		a.area_id AS "area.id",
+		a.area_name AS "areaName",
+		a.baili_synchor_state AS "bailiSynchorState",
+		a.brand_id AS "brandId",
+		a.brand_name AS "brandName",
+		a.carr_id AS "carrId",
+		a.channel_confirm_time AS "channelConfirmTime",
+		a.channel_ems_price AS "channelEmsPrice",
+		a.channel_id AS "channelId",
+		a.channel_name AS "channelName",
+		a.channel_send_time AS "channelSendTime",
+		a.channels_before AS "channelsBefore",
+		a.channels_num_before AS "channelsNumBefore",
+		a.check_user_id AS "checkUserId",
+		a.check_user_name AS "checkUserName",
+		a.city_id AS "cityId",
+		a.city_name AS "cityName",
+		a.cust_addr AS "custAddr",
+		a.cust_name AS "custName",
+		a.cust_tel AS "custTel",
+		a.custom_order_id AS "customOrderId",
+		a.discount AS "discount",
+		a.ems_comp AS "emsComp",
+		a.ems_comp_ori AS "emsCompOri",
+		a.ems_price AS "emsPrice",
+		a.err_msg AS "errMsg",
+		a.fact_channel_id AS "factChannelId",
+		a.fact_channel_name AS "factChannelName",
+		a.fact_discount AS "factDiscount",
+		a.fact_goods_count AS "factGoodsCount",
+		a.gender_id AS "genderId",
+		a.gender_name AS "genderName",
+		a.goods_count AS "goodsCount",
+		a.goods_nbr AS "goodsNbr",
+		a.goods_price AS "goodsPrice",
+		a.goods_size AS "goodsSize",
+		a.goods_type_id AS "goodsTypeId",
+		a.goods_type_name AS "goodsTypeName",
+		a.numiid AS "numiid",
+		a.order_fahuo_state AS "orderFahuoState",
+		a.order_ip AS "orderIp",
+		a.order_parent_id AS "orderParentId",
+		a.order_price AS "orderPrice",
+		a.order_price_pre AS "orderPricePre",
+		a.order_state AS "orderState",
+		a.order_state_time AS "orderStateTime",
+		a.order_sub_nos AS "orderSubNos",
+		a.order_time AS "orderTime",
+		a.order_user_id AS "orderUserId",
+		a.order_user_name AS "orderUserName",
+		a.ori_nbr AS "oriNbr",
+		a.ori_size AS "oriSize",
+		a.platform_agio AS "platformAgio",
+		a.platform_deduct AS "platformDeduct",
+		a.platform_freight AS "platformFreight",
+		a.platform_freight_pre AS "platformFreightPre",
+		a.province_id AS "provinceId",
+		a.province_name AS "provinceName",
+		a.remark AS "remark",
+		a.season_id AS "seasonId",
+		a.season_name AS "seasonName",
+		a.shop_id AS "shopId",
+		a.shop_name AS "shopName",
+		a.status AS "status",
+		a.tid AS "tid",
+		a.uuid AS "uuid",
+		a.package_price AS "packagePrice",
+		a.logistics_type AS "logisticsType",
+		a.order_src AS "orderSrc",
+		a4.name AS "area.name"
+	</sql>
+	
+	<sql id="fxOrdersExportJoins">
+		LEFT JOIN sys_area a4 ON a4.id = a.area_id
+	</sql>
+    
+	<select id="get" resultType="FxOrdersExport">
+		SELECT 
+			<include refid="fxOrdersExportColumns"/>
+		FROM fx_orders_export a
+		<include refid="fxOrdersExportJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxOrdersExport">
+		SELECT 
+			<include refid="fxOrdersExportColumns"/>
+		FROM fx_orders_export a
+		<include refid="fxOrdersExportJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxOrdersExport">
+		SELECT 
+			<include refid="fxOrdersExportColumns"/>
+		FROM fx_orders_export a
+		<include refid="fxOrdersExportJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_orders_export(
+			order_id,
+			abn_state,
+			api_order_id,
+			area_id,
+			area_name,
+			baili_synchor_state,
+			brand_id,
+			brand_name,
+			carr_id,
+			channel_confirm_time,
+			channel_ems_price,
+			channel_id,
+			channel_name,
+			channel_send_time,
+			channels_before,
+			channels_num_before,
+			check_user_id,
+			check_user_name,
+			city_id,
+			city_name,
+			cust_addr,
+			cust_name,
+			cust_tel,
+			custom_order_id,
+			discount,
+			ems_comp,
+			ems_comp_ori,
+			ems_price,
+			err_msg,
+			fact_channel_id,
+			fact_channel_name,
+			fact_discount,
+			fact_goods_count,
+			gender_id,
+			gender_name,
+			goods_count,
+			goods_nbr,
+			goods_price,
+			goods_size,
+			goods_type_id,
+			goods_type_name,
+			numiid,
+			order_fahuo_state,
+			order_ip,
+			order_parent_id,
+			order_price,
+			order_price_pre,
+			order_state,
+			order_state_time,
+			order_sub_nos,
+			order_time,
+			order_user_id,
+			order_user_name,
+			ori_nbr,
+			ori_size,
+			platform_agio,
+			platform_deduct,
+			platform_freight,
+			platform_freight_pre,
+			province_id,
+			province_name,
+			remark,
+			season_id,
+			season_name,
+			shop_id,
+			shop_name,
+			status,
+			tid,
+			uuid,
+			package_price,
+			logistics_type,
+			order_src
+		) VALUES (
+			#{orderId},
+			#{abnState},
+			#{apiOrderId},
+			#{area.id},
+			#{areaName},
+			#{bailiSynchorState},
+			#{brandId},
+			#{brandName},
+			#{carrId},
+			#{channelConfirmTime},
+			#{channelEmsPrice},
+			#{channelId},
+			#{channelName},
+			#{channelSendTime},
+			#{channelsBefore},
+			#{channelsNumBefore},
+			#{checkUserId},
+			#{checkUserName},
+			#{cityId},
+			#{cityName},
+			#{custAddr},
+			#{custName},
+			#{custTel},
+			#{customOrderId},
+			#{discount},
+			#{emsComp},
+			#{emsCompOri},
+			#{emsPrice},
+			#{errMsg},
+			#{factChannelId},
+			#{factChannelName},
+			#{factDiscount},
+			#{factGoodsCount},
+			#{genderId},
+			#{genderName},
+			#{goodsCount},
+			#{goodsNbr},
+			#{goodsPrice},
+			#{goodsSize},
+			#{goodsTypeId},
+			#{goodsTypeName},
+			#{numiid},
+			#{orderFahuoState},
+			#{orderIp},
+			#{orderParentId},
+			#{orderPrice},
+			#{orderPricePre},
+			#{orderState},
+			#{orderStateTime},
+			#{orderSubNos},
+			#{orderTime},
+			#{orderUserId},
+			#{orderUserName},
+			#{oriNbr},
+			#{oriSize},
+			#{platformAgio},
+			#{platformDeduct},
+			#{platformFreight},
+			#{platformFreightPre},
+			#{provinceId},
+			#{provinceName},
+			#{remark},
+			#{seasonId},
+			#{seasonName},
+			#{shopId},
+			#{shopName},
+			#{status},
+			#{tid},
+			#{uuid},
+			#{packagePrice},
+			#{logisticsType},
+			#{orderSrc}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_orders_export SET 	
+			order_id = #{orderId},
+			abn_state = #{abnState},
+			api_order_id = #{apiOrderId},
+			area_id = #{area.id},
+			area_name = #{areaName},
+			baili_synchor_state = #{bailiSynchorState},
+			brand_id = #{brandId},
+			brand_name = #{brandName},
+			carr_id = #{carrId},
+			channel_confirm_time = #{channelConfirmTime},
+			channel_ems_price = #{channelEmsPrice},
+			channel_id = #{channelId},
+			channel_name = #{channelName},
+			channel_send_time = #{channelSendTime},
+			channels_before = #{channelsBefore},
+			channels_num_before = #{channelsNumBefore},
+			check_user_id = #{checkUserId},
+			check_user_name = #{checkUserName},
+			city_id = #{cityId},
+			city_name = #{cityName},
+			cust_addr = #{custAddr},
+			cust_name = #{custName},
+			cust_tel = #{custTel},
+			custom_order_id = #{customOrderId},
+			discount = #{discount},
+			ems_comp = #{emsComp},
+			ems_comp_ori = #{emsCompOri},
+			ems_price = #{emsPrice},
+			err_msg = #{errMsg},
+			fact_channel_id = #{factChannelId},
+			fact_channel_name = #{factChannelName},
+			fact_discount = #{factDiscount},
+			fact_goods_count = #{factGoodsCount},
+			gender_id = #{genderId},
+			gender_name = #{genderName},
+			goods_count = #{goodsCount},
+			goods_nbr = #{goodsNbr},
+			goods_price = #{goodsPrice},
+			goods_size = #{goodsSize},
+			goods_type_id = #{goodsTypeId},
+			goods_type_name = #{goodsTypeName},
+			numiid = #{numiid},
+			order_fahuo_state = #{orderFahuoState},
+			order_ip = #{orderIp},
+			order_parent_id = #{orderParentId},
+			order_price = #{orderPrice},
+			order_price_pre = #{orderPricePre},
+			order_state = #{orderState},
+			order_state_time = #{orderStateTime},
+			order_sub_nos = #{orderSubNos},
+			order_time = #{orderTime},
+			order_user_id = #{orderUserId},
+			order_user_name = #{orderUserName},
+			ori_nbr = #{oriNbr},
+			ori_size = #{oriSize},
+			platform_agio = #{platformAgio},
+			platform_deduct = #{platformDeduct},
+			platform_freight = #{platformFreight},
+			platform_freight_pre = #{platformFreightPre},
+			province_id = #{provinceId},
+			province_name = #{provinceName},
+			remark = #{remark},
+			season_id = #{seasonId},
+			season_name = #{seasonName},
+			shop_id = #{shopId},
+			shop_name = #{shopName},
+			status = #{status},
+			tid = #{tid},
+			uuid = #{uuid},
+			package_price = #{packagePrice},
+			logistics_type = #{logisticsType},
+			order_src = #{orderSrc}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_orders_export
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

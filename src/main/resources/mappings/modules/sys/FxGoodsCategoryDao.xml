@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.FxGoodsCategoryDao">
+    
+	<sql id="fxGoodsCategoryColumns">
+		a.category_id AS "categoryId",
+		a.category_name AS "categoryName",
+		a.state AS "state",
+		a.weight AS "weight",
+		a.remark AS "remark"
+	</sql>
+	
+	<sql id="fxGoodsCategoryJoins">
+	</sql>
+    
+	<select id="get" resultType="FxGoodsCategory">
+		SELECT 
+			<include refid="fxGoodsCategoryColumns"/>
+		FROM fx_goods_category a
+		<include refid="fxGoodsCategoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxGoodsCategory">
+		SELECT 
+			<include refid="fxGoodsCategoryColumns"/>
+		FROM fx_goods_category a
+		<include refid="fxGoodsCategoryJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxGoodsCategory">
+		SELECT 
+			<include refid="fxGoodsCategoryColumns"/>
+		FROM fx_goods_category a
+		<include refid="fxGoodsCategoryJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_goods_category(
+			category_id,
+			category_name,
+			state,
+			weight,
+			remark
+		) VALUES (
+			#{categoryId},
+			#{categoryName},
+			#{state},
+			#{weight},
+			#{remark}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_goods_category SET 	
+			category_id = #{categoryId},
+			category_name = #{categoryName},
+			state = #{state},
+			weight = #{weight},
+			remark = #{remark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_goods_category
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

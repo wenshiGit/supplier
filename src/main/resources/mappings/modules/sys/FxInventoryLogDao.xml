@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.FxInventoryLogDao">
+    
+	<sql id="fxInventoryLogColumns">
+		a.id AS "id",
+		a.channel_id AS "channelId",
+		a.channel_name AS "channelName",
+		a.import_way AS "importWay",
+		a.update_counts AS "updateCounts",
+		a.after_update_counts AS "afterUpdateCounts",
+		a.this_update_inven_total AS "thisUpdateInvenTotal",
+		a.after_update_all_inven_total AS "afterUpdateAllInvenTotal",
+		a.log_time AS "logTime",
+		a.operator AS "operator"
+	</sql>
+	
+	<sql id="fxInventoryLogJoins">
+	</sql>
+    
+	<select id="get" resultType="FxInventoryLog">
+		SELECT 
+			<include refid="fxInventoryLogColumns"/>
+		FROM fx_inventory_log a
+		<include refid="fxInventoryLogJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxInventoryLog">
+		SELECT 
+			<include refid="fxInventoryLogColumns"/>
+		FROM fx_inventory_log a
+		<include refid="fxInventoryLogJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxInventoryLog">
+		SELECT 
+			<include refid="fxInventoryLogColumns"/>
+		FROM fx_inventory_log a
+		<include refid="fxInventoryLogJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_inventory_log(
+			id,
+			channel_id,
+			channel_name,
+			import_way,
+			update_counts,
+			after_update_counts,
+			this_update_inven_total,
+			after_update_all_inven_total,
+			log_time,
+			operator
+		) VALUES (
+			#{id},
+			#{channelId},
+			#{channelName},
+			#{importWay},
+			#{updateCounts},
+			#{afterUpdateCounts},
+			#{thisUpdateInvenTotal},
+			#{afterUpdateAllInvenTotal},
+			#{logTime},
+			#{operator}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_inventory_log SET 	
+			channel_id = #{channelId},
+			channel_name = #{channelName},
+			import_way = #{importWay},
+			update_counts = #{updateCounts},
+			after_update_counts = #{afterUpdateCounts},
+			this_update_inven_total = #{thisUpdateInvenTotal},
+			after_update_all_inven_total = #{afterUpdateAllInvenTotal},
+			log_time = #{logTime},
+			operator = #{operator}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_inventory_log
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

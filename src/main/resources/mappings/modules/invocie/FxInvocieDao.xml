@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.invocie.dao.FxInvocieDao">
+    
+	<sql id="fxInvocieColumns">
+		a.invocie_id AS "invocieId",
+		a.apply_user_id AS "applyUserId",
+		a.apply_user_name AS "applyUserName",
+		a.created_time AS "createdTime",
+		a.cust_addr AS "custAddr",
+		a.cust_name AS "custName",
+		a.cust_tel AS "custTel",
+		a.ems_company AS "emsCompany",
+		a.ems_company_name AS "emsCompanyName",
+		a.ems_nbr AS "emsNbr",
+		a.ems_price AS "emsPrice",
+		a.invocie_nbr AS "invocieNbr",
+		a.invocie_play_price AS "invociePlayPrice",
+		a.invocie_price AS "invociePrice",
+		a.invocie_state AS "invocieState",
+		a.invocie_title AS "invocieTitle",
+		a.invocie_type AS "invocieType",
+		a.main_order_id AS "mainOrderId",
+		a.remark AS "remark",
+		a.return_ems_time AS "returnEmsTime",
+		a.invocie_type_two AS "invocieTypeTwo",
+		a.invocie_type_three AS "invocieTypeThree",
+		a.invocie_bank AS "invocieBank",
+		a.download_addr AS "downloadAddr"
+	</sql>
+	
+	<sql id="fxInvocieJoins">
+	</sql>
+    
+	<select id="get" resultType="FxInvocie">
+		SELECT 
+			<include refid="fxInvocieColumns"/>
+		FROM fx_invocie a
+		<include refid="fxInvocieJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxInvocie">
+		SELECT 
+			<include refid="fxInvocieColumns"/>
+		FROM fx_invocie a
+		<include refid="fxInvocieJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxInvocie">
+		SELECT 
+			<include refid="fxInvocieColumns"/>
+		FROM fx_invocie a
+		<include refid="fxInvocieJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_invocie(
+			invocie_id,
+			apply_user_id,
+			apply_user_name,
+			created_time,
+			cust_addr,
+			cust_name,
+			cust_tel,
+			ems_company,
+			ems_company_name,
+			ems_nbr,
+			ems_price,
+			invocie_nbr,
+			invocie_play_price,
+			invocie_price,
+			invocie_state,
+			invocie_title,
+			invocie_type,
+			main_order_id,
+			remark,
+			return_ems_time,
+			invocie_type_two,
+			invocie_type_three,
+			invocie_bank,
+			download_addr
+		) VALUES (
+			#{invocieId},
+			#{applyUserId},
+			#{applyUserName},
+			#{createdTime},
+			#{custAddr},
+			#{custName},
+			#{custTel},
+			#{emsCompany},
+			#{emsCompanyName},
+			#{emsNbr},
+			#{emsPrice},
+			#{invocieNbr},
+			#{invociePlayPrice},
+			#{invociePrice},
+			#{invocieState},
+			#{invocieTitle},
+			#{invocieType},
+			#{mainOrderId},
+			#{remark},
+			#{returnEmsTime},
+			#{invocieTypeTwo},
+			#{invocieTypeThree},
+			#{invocieBank},
+			#{downloadAddr}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_invocie SET 	
+			invocie_id = #{invocieId},
+			apply_user_id = #{applyUserId},
+			apply_user_name = #{applyUserName},
+			created_time = #{createdTime},
+			cust_addr = #{custAddr},
+			cust_name = #{custName},
+			cust_tel = #{custTel},
+			ems_company = #{emsCompany},
+			ems_company_name = #{emsCompanyName},
+			ems_nbr = #{emsNbr},
+			ems_price = #{emsPrice},
+			invocie_nbr = #{invocieNbr},
+			invocie_play_price = #{invociePlayPrice},
+			invocie_price = #{invociePrice},
+			invocie_state = #{invocieState},
+			invocie_title = #{invocieTitle},
+			invocie_type = #{invocieType},
+			main_order_id = #{mainOrderId},
+			remark = #{remark},
+			return_ems_time = #{returnEmsTime},
+			invocie_type_two = #{invocieTypeTwo},
+			invocie_type_three = #{invocieTypeThree},
+			invocie_bank = #{invocieBank},
+			download_addr = #{downloadAddr}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_invocie
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

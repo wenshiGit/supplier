@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.invocie.dao.FxInvocieNbrDao">
+    
+	<sql id="fxInvocieNbrColumns">
+		a.invocie_nbr AS "invocieNbr",
+		a.invocie_brank AS "invocieBrank",
+		a.pic_one_url AS "picOneUrl",
+		a.pic_two_url AS "picTwoUrl"
+	</sql>
+	
+	<sql id="fxInvocieNbrJoins">
+	</sql>
+    
+	<select id="get" resultType="FxInvocieNbr">
+		SELECT 
+			<include refid="fxInvocieNbrColumns"/>
+		FROM fx_invocie_nbr a
+		<include refid="fxInvocieNbrJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxInvocieNbr">
+		SELECT 
+			<include refid="fxInvocieNbrColumns"/>
+		FROM fx_invocie_nbr a
+		<include refid="fxInvocieNbrJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxInvocieNbr">
+		SELECT 
+			<include refid="fxInvocieNbrColumns"/>
+		FROM fx_invocie_nbr a
+		<include refid="fxInvocieNbrJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_invocie_nbr(
+			invocie_nbr,
+			invocie_brank,
+			pic_one_url,
+			pic_two_url
+		) VALUES (
+			#{invocieNbr},
+			#{invocieBrank},
+			#{picOneUrl},
+			#{picTwoUrl}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_invocie_nbr SET 	
+			invocie_nbr = #{invocieNbr},
+			invocie_brank = #{invocieBrank},
+			pic_one_url = #{picOneUrl},
+			pic_two_url = #{picTwoUrl}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_invocie_nbr
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.customerservice.dao.FxCustomerServiceMsgDao">
+    
+	<sql id="fxCustomerServiceMsgColumns">
+		a.log_id AS "logId",
+		a.user_id AS "user.id",
+		a.service_id AS "serviceId",
+		a.log_desc AS "logDesc",
+		a.read_state AS "readState",
+		a.private_type AS "privateType",
+		a.create_time AS "createTime",
+		u2.name AS "user.name"
+	</sql>
+	
+	<sql id="fxCustomerServiceMsgJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="FxCustomerServiceMsg">
+		SELECT 
+			<include refid="fxCustomerServiceMsgColumns"/>
+		FROM fx_customer_service_msg a
+		<include refid="fxCustomerServiceMsgJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxCustomerServiceMsg">
+		SELECT 
+			<include refid="fxCustomerServiceMsgColumns"/>
+		FROM fx_customer_service_msg a
+		<include refid="fxCustomerServiceMsgJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxCustomerServiceMsg">
+		SELECT 
+			<include refid="fxCustomerServiceMsgColumns"/>
+		FROM fx_customer_service_msg a
+		<include refid="fxCustomerServiceMsgJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_customer_service_msg(
+			log_id,
+			user_id,
+			service_id,
+			log_desc,
+			read_state,
+			private_type,
+			create_time
+		) VALUES (
+			#{logId},
+			#{user.id},
+			#{serviceId},
+			#{logDesc},
+			#{readState},
+			#{privateType},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_customer_service_msg SET 	
+			log_id = #{logId},
+			user_id = #{user.id},
+			service_id = #{serviceId},
+			log_desc = #{logDesc},
+			read_state = #{readState},
+			private_type = #{privateType},
+			create_time = #{createTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_customer_service_msg
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

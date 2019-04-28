@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.finance.dao.FxTaobaoShopDao">
+    
+	<sql id="fxTaobaoShopColumns">
+		a.shop_id AS "shopId",
+		a.user_id AS "user.id",
+		a.shop_name AS "shopName",
+		a.app_key AS "appKey",
+		a.app_secret AS "appSecret",
+		a.session_key AS "sessionKey",
+		a.login_time AS "loginTime",
+		a.create_time AS "createTime",
+		a.taobao_nickname AS "taobaoNickname",
+		a.expire_time AS "expireTime",
+		a.state AS "state",
+		a.last_download_time AS "lastDownloadTime",
+		a.shop_type AS "shopType",
+		a.refund_addr_id AS "refundAddrId",
+		a.up_user_id AS "upUserId",
+		u2.name AS "user.name"
+	</sql>
+	
+	<sql id="fxTaobaoShopJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="FxTaobaoShop">
+		SELECT 
+			<include refid="fxTaobaoShopColumns"/>
+		FROM fx_taobao_shop a
+		<include refid="fxTaobaoShopJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxTaobaoShop">
+		SELECT 
+			<include refid="fxTaobaoShopColumns"/>
+		FROM fx_taobao_shop a
+		<include refid="fxTaobaoShopJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxTaobaoShop">
+		SELECT 
+			<include refid="fxTaobaoShopColumns"/>
+		FROM fx_taobao_shop a
+		<include refid="fxTaobaoShopJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_taobao_shop(
+			shop_id,
+			user_id,
+			shop_name,
+			app_key,
+			app_secret,
+			session_key,
+			login_time,
+			create_time,
+			taobao_nickname,
+			expire_time,
+			state,
+			last_download_time,
+			shop_type,
+			refund_addr_id,
+			up_user_id
+		) VALUES (
+			#{shopId},
+			#{user.id},
+			#{shopName},
+			#{appKey},
+			#{appSecret},
+			#{sessionKey},
+			#{loginTime},
+			#{createTime},
+			#{taobaoNickname},
+			#{expireTime},
+			#{state},
+			#{lastDownloadTime},
+			#{shopType},
+			#{refundAddrId},
+			#{upUserId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_taobao_shop SET 	
+			shop_id = #{shopId},
+			user_id = #{user.id},
+			shop_name = #{shopName},
+			app_key = #{appKey},
+			app_secret = #{appSecret},
+			session_key = #{sessionKey},
+			login_time = #{loginTime},
+			create_time = #{createTime},
+			taobao_nickname = #{taobaoNickname},
+			expire_time = #{expireTime},
+			state = #{state},
+			last_download_time = #{lastDownloadTime},
+			shop_type = #{shopType},
+			refund_addr_id = #{refundAddrId},
+			up_user_id = #{upUserId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_taobao_shop
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

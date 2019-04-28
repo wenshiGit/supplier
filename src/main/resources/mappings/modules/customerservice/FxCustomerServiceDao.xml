@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.customerservice.dao.FxCustomerServiceDao">
+    
+	<sql id="fxCustomerServiceColumns">
+		a.service_id AS "serviceId",
+		a.backgoodscount AS "backgoodscount",
+		a.channel_return_count AS "channelReturnCount",
+		a.channel_return_money AS "channelReturnMoney",
+		a.channel_return_date AS "channelReturnDate",
+		a.ems_comp AS "emsComp",
+		a.ems_id AS "emsId",
+		a.error_remark AS "errorRemark",
+		a.log_id AS "logId",
+		a.order_id AS "orderId",
+		a.return_addr AS "returnAddr",
+		a.return_ems_time AS "returnEmsTime",
+		a.return_ems_remark AS "returnEmsRemark",
+		a.return_money AS "returnMoney",
+		a.return_ems_money AS "returnEmsMoney",
+		a.returnedmoney AS "returnedmoney",
+		a.send_count AS "sendCount",
+		a.service_crt_time AS "serviceCrtTime",
+		a.service_modify_time AS "serviceModifyTime",
+		a.service_name AS "serviceName",
+		a.service_remark AS "serviceRemark",
+		a.service_return_state AS "serviceReturnState",
+		a.service_state AS "serviceState",
+		a.service_type AS "serviceType",
+		a.user_id AS "user.id",
+		a.return_platform_deduct AS "returnPlatformDeduct",
+		a.service_crt_mon_no AS "serviceCrtMonNo",
+		u25.name AS "user.name"
+	</sql>
+	
+	<sql id="fxCustomerServiceJoins">
+		LEFT JOIN sys_user u25 ON u25.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="FxCustomerService">
+		SELECT 
+			<include refid="fxCustomerServiceColumns"/>
+		FROM fx_customer_service a
+		<include refid="fxCustomerServiceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxCustomerService">
+		SELECT 
+			<include refid="fxCustomerServiceColumns"/>
+		FROM fx_customer_service a
+		<include refid="fxCustomerServiceJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxCustomerService">
+		SELECT 
+			<include refid="fxCustomerServiceColumns"/>
+		FROM fx_customer_service a
+		<include refid="fxCustomerServiceJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_customer_service(
+			service_id,
+			backgoodscount,
+			channel_return_count,
+			channel_return_money,
+			channel_return_date,
+			ems_comp,
+			ems_id,
+			error_remark,
+			log_id,
+			order_id,
+			return_addr,
+			return_ems_time,
+			return_ems_remark,
+			return_money,
+			return_ems_money,
+			returnedmoney,
+			send_count,
+			service_crt_time,
+			service_modify_time,
+			service_name,
+			service_remark,
+			service_return_state,
+			service_state,
+			service_type,
+			user_id,
+			return_platform_deduct,
+			service_crt_mon_no
+		) VALUES (
+			#{serviceId},
+			#{backgoodscount},
+			#{channelReturnCount},
+			#{channelReturnMoney},
+			#{channelReturnDate},
+			#{emsComp},
+			#{emsId},
+			#{errorRemark},
+			#{logId},
+			#{orderId},
+			#{returnAddr},
+			#{returnEmsTime},
+			#{returnEmsRemark},
+			#{returnMoney},
+			#{returnEmsMoney},
+			#{returnedmoney},
+			#{sendCount},
+			#{serviceCrtTime},
+			#{serviceModifyTime},
+			#{serviceName},
+			#{serviceRemark},
+			#{serviceReturnState},
+			#{serviceState},
+			#{serviceType},
+			#{user.id},
+			#{returnPlatformDeduct},
+			#{serviceCrtMonNo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_customer_service SET 	
+			service_id = #{serviceId},
+			backgoodscount = #{backgoodscount},
+			channel_return_count = #{channelReturnCount},
+			channel_return_money = #{channelReturnMoney},
+			channel_return_date = #{channelReturnDate},
+			ems_comp = #{emsComp},
+			ems_id = #{emsId},
+			error_remark = #{errorRemark},
+			log_id = #{logId},
+			order_id = #{orderId},
+			return_addr = #{returnAddr},
+			return_ems_time = #{returnEmsTime},
+			return_ems_remark = #{returnEmsRemark},
+			return_money = #{returnMoney},
+			return_ems_money = #{returnEmsMoney},
+			returnedmoney = #{returnedmoney},
+			send_count = #{sendCount},
+			service_crt_time = #{serviceCrtTime},
+			service_modify_time = #{serviceModifyTime},
+			service_name = #{serviceName},
+			service_remark = #{serviceRemark},
+			service_return_state = #{serviceReturnState},
+			service_state = #{serviceState},
+			service_type = #{serviceType},
+			user_id = #{user.id},
+			return_platform_deduct = #{returnPlatformDeduct},
+			service_crt_mon_no = #{serviceCrtMonNo}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_customer_service
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

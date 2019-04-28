@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.customerservice.dao.FxMessagesDao">
+    
+	<sql id="fxMessagesColumns">
+		a.id AS "id",
+		a.question_id AS "questionId",
+		a.order_id AS "orderId",
+		a.title AS "title",
+		a.type AS "type",
+		a.message AS "message",
+		a.time AS "time",
+		a.user_id AS "user.id",
+		a.user_name AS "userName",
+		a.receiver_id AS "receiverId",
+		a.status AS "status",
+		u8.name AS "user.name"
+	</sql>
+	
+	<sql id="fxMessagesJoins">
+		LEFT JOIN sys_user u8 ON u8.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="FxMessages">
+		SELECT 
+			<include refid="fxMessagesColumns"/>
+		FROM fx_messages a
+		<include refid="fxMessagesJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxMessages">
+		SELECT 
+			<include refid="fxMessagesColumns"/>
+		FROM fx_messages a
+		<include refid="fxMessagesJoins"/>
+		<where>
+			
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxMessages">
+		SELECT 
+			<include refid="fxMessagesColumns"/>
+		FROM fx_messages a
+		<include refid="fxMessagesJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_messages(
+			id,
+			question_id,
+			order_id,
+			title,
+			type,
+			message,
+			time,
+			user_id,
+			user_name,
+			receiver_id,
+			status
+		) VALUES (
+			#{id},
+			#{questionId},
+			#{orderId},
+			#{title},
+			#{type},
+			#{message},
+			#{time},
+			#{user.id},
+			#{userName},
+			#{receiverId},
+			#{status}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_messages SET 	
+			question_id = #{questionId},
+			order_id = #{orderId},
+			title = #{title},
+			type = #{type},
+			message = #{message},
+			time = #{time},
+			user_id = #{user.id},
+			user_name = #{userName},
+			receiver_id = #{receiverId},
+			status = #{status}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_messages
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

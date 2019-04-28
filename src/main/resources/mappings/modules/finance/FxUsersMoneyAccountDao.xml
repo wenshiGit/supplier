@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.finance.dao.FxUsersMoneyAccountDao">
+    
+	<sql id="fxUsersMoneyAccountColumns">
+		a.id AS "id",
+		a.add_money AS "addMoney",
+		a.create_date AS "createDate",
+		a.event_desc AS "eventDesc",
+		a.event_type AS "eventType",
+		a.oper_id AS "operId",
+		a.order_id AS "orderId",
+		a.surplus_money AS "surplusMoney",
+		a.use_money AS "useMoney",
+		a.user_id AS "user.id",
+		a.user_money AS "userMoney",
+		u10.name AS "user.name"
+	</sql>
+	
+	<sql id="fxUsersMoneyAccountJoins">
+		LEFT JOIN sys_user u10 ON u10.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="FxUsersMoneyAccount">
+		SELECT 
+			<include refid="fxUsersMoneyAccountColumns"/>
+		FROM fx_users_money_account a
+		<include refid="fxUsersMoneyAccountJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxUsersMoneyAccount">
+		SELECT 
+			<include refid="fxUsersMoneyAccountColumns"/>
+		FROM fx_users_money_account a
+		<include refid="fxUsersMoneyAccountJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxUsersMoneyAccount">
+		SELECT 
+			<include refid="fxUsersMoneyAccountColumns"/>
+		FROM fx_users_money_account a
+		<include refid="fxUsersMoneyAccountJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_users_money_account(
+			id,
+			add_money,
+			create_date,
+			event_desc,
+			event_type,
+			oper_id,
+			order_id,
+			surplus_money,
+			use_money,
+			user_id,
+			user_money
+		) VALUES (
+			#{id},
+			#{addMoney},
+			#{createDate},
+			#{eventDesc},
+			#{eventType},
+			#{operId},
+			#{orderId},
+			#{surplusMoney},
+			#{useMoney},
+			#{user.id},
+			#{userMoney}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_users_money_account SET 	
+			add_money = #{addMoney},
+			event_desc = #{eventDesc},
+			event_type = #{eventType},
+			oper_id = #{operId},
+			order_id = #{orderId},
+			surplus_money = #{surplusMoney},
+			use_money = #{useMoney},
+			user_id = #{user.id},
+			user_money = #{userMoney}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_users_money_account
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

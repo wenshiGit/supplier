@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.distribution.dao.FxOrderFinanceImportDao">
+    
+	<sql id="fxOrderFinanceImportColumns">
+		a.id AS "id",
+		a.order_id AS "orderId",
+		a.goods_nbr AS "goodsNbr",
+		a.goods_size AS "goodsSize",
+		a.import_channel_price AS "importChannelPrice",
+		a.import_channel_refund AS "importChannelRefund",
+		a.import_date AS "importDate"
+	</sql>
+	
+	<sql id="fxOrderFinanceImportJoins">
+	</sql>
+    
+	<select id="get" resultType="FxOrderFinanceImport">
+		SELECT 
+			<include refid="fxOrderFinanceImportColumns"/>
+		FROM fx_order_finance_import a
+		<include refid="fxOrderFinanceImportJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxOrderFinanceImport">
+		SELECT 
+			<include refid="fxOrderFinanceImportColumns"/>
+		FROM fx_order_finance_import a
+		<include refid="fxOrderFinanceImportJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxOrderFinanceImport">
+		SELECT 
+			<include refid="fxOrderFinanceImportColumns"/>
+		FROM fx_order_finance_import a
+		<include refid="fxOrderFinanceImportJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_order_finance_import(
+			id,
+			order_id,
+			goods_nbr,
+			goods_size,
+			import_channel_price,
+			import_channel_refund,
+			import_date
+		) VALUES (
+			#{id},
+			#{orderId},
+			#{goodsNbr},
+			#{goodsSize},
+			#{importChannelPrice},
+			#{importChannelRefund},
+			#{importDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_order_finance_import SET 	
+			order_id = #{orderId},
+			goods_nbr = #{goodsNbr},
+			goods_size = #{goodsSize},
+			import_channel_price = #{importChannelPrice},
+			import_channel_refund = #{importChannelRefund},
+			import_date = #{importDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_order_finance_import
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

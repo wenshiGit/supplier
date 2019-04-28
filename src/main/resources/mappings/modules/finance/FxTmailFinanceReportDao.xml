@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.finance.dao.FxTmailFinanceReportDao">
+    
+	<sql id="fxTmailFinanceReportColumns">
+		a.oid AS "oid",
+		a.sys_oid AS "sysOid",
+		a.shop_name AS "shopName",
+		a.shop_id AS "shopId",
+		a.sku_id AS "skuId",
+		a.paytime AS "paytime",
+		a.brand AS "brand",
+		a.goods_nbr AS "goodsNbr",
+		a.goods_size AS "goodsSize",
+		a.sys_order_time AS "sysOrderTime",
+		a.sys_send_time AS "sysSendTime",
+		a.num AS "num",
+		a.price AS "price",
+		a.payment AS "payment",
+		a.cust_name AS "custName",
+		a.ems_comp AS "emsComp",
+		a.ems_price AS "emsPrice",
+		a.channel_name AS "channelName",
+		a.channel_id AS "channelId",
+		a.kefu_name AS "kefuName",
+		a.discount_fee AS "discountFee",
+		a.promotion_info AS "promotionInfo",
+		a.sys_order_price AS "sysOrderPrice",
+		a.sys_post_name AS "sysPostName",
+		a.sys_post_fee AS "sysPostFee",
+		a.profits AS "profits",
+		a.tip AS "tip"
+	</sql>
+	
+	<sql id="fxTmailFinanceReportJoins">
+	</sql>
+    
+	<select id="get" resultType="FxTmailFinanceReport">
+		SELECT 
+			<include refid="fxTmailFinanceReportColumns"/>
+		FROM fx_tmail_finance_report a
+		<include refid="fxTmailFinanceReportJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxTmailFinanceReport">
+		SELECT 
+			<include refid="fxTmailFinanceReportColumns"/>
+		FROM fx_tmail_finance_report a
+		<include refid="fxTmailFinanceReportJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxTmailFinanceReport">
+		SELECT 
+			<include refid="fxTmailFinanceReportColumns"/>
+		FROM fx_tmail_finance_report a
+		<include refid="fxTmailFinanceReportJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_tmail_finance_report(
+			oid,
+			sys_oid,
+			shop_name,
+			shop_id,
+			sku_id,
+			paytime,
+			brand,
+			goods_nbr,
+			goods_size,
+			sys_order_time,
+			sys_send_time,
+			num,
+			price,
+			payment,
+			cust_name,
+			ems_comp,
+			ems_price,
+			channel_name,
+			channel_id,
+			kefu_name,
+			discount_fee,
+			promotion_info,
+			sys_order_price,
+			sys_post_name,
+			sys_post_fee,
+			profits,
+			tip
+		) VALUES (
+			#{oid},
+			#{sysOid},
+			#{shopName},
+			#{shopId},
+			#{skuId},
+			#{paytime},
+			#{brand},
+			#{goodsNbr},
+			#{goodsSize},
+			#{sysOrderTime},
+			#{sysSendTime},
+			#{num},
+			#{price},
+			#{payment},
+			#{custName},
+			#{emsComp},
+			#{emsPrice},
+			#{channelName},
+			#{channelId},
+			#{kefuName},
+			#{discountFee},
+			#{promotionInfo},
+			#{sysOrderPrice},
+			#{sysPostName},
+			#{sysPostFee},
+			#{profits},
+			#{tip}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_tmail_finance_report SET 	
+			oid = #{oid},
+			sys_oid = #{sysOid},
+			shop_name = #{shopName},
+			shop_id = #{shopId},
+			sku_id = #{skuId},
+			paytime = #{paytime},
+			brand = #{brand},
+			goods_nbr = #{goodsNbr},
+			goods_size = #{goodsSize},
+			sys_order_time = #{sysOrderTime},
+			sys_send_time = #{sysSendTime},
+			num = #{num},
+			price = #{price},
+			payment = #{payment},
+			cust_name = #{custName},
+			ems_comp = #{emsComp},
+			ems_price = #{emsPrice},
+			channel_name = #{channelName},
+			channel_id = #{channelId},
+			kefu_name = #{kefuName},
+			discount_fee = #{discountFee},
+			promotion_info = #{promotionInfo},
+			sys_order_price = #{sysOrderPrice},
+			sys_post_name = #{sysPostName},
+			sys_post_fee = #{sysPostFee},
+			profits = #{profits},
+			tip = #{tip}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_tmail_finance_report
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

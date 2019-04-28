@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.finance.dao.FxTaobaoProfitSettlementDao">
+    
+	<sql id="fxTaobaoProfitSettlementColumns">
+		a.id AS "id",
+		a.our_system_order_no AS "ourSystemOrderNo",
+		a.shop_id AS "shopId",
+		a.our_system_order_time AS "ourSystemOrderTime",
+		a.order_time AS "orderTime",
+		a.taobao_order_no AS "taobaoOrderNo",
+		a.alipay_trade_no AS "alipayTradeNo",
+		a.service_fee AS "serviceFee",
+		a.loan_income AS "loanIncome",
+		a.donation_of_trade AS "donationOfTrade",
+		a.distribution_costs AS "distributionCosts",
+		a.tmail_commission AS "tmailCommission",
+		a.integral_withhold AS "integralWithhold",
+		a.seo_commission_fee AS "seoCommissionFee",
+		a.other_fee AS "otherFee",
+		a.subtotal_income AS "subtotalIncome",
+		a.creditcard_pay_service_fee AS "creditcardPayServiceFee",
+		a.after_sale_refund AS "afterSaleRefund",
+		a.commission_returngive AS "commissionReturngive",
+		a.freight_risk AS "freightRisk",
+		a.point_returngive AS "pointReturngive",
+		a.subtotal_expenditure AS "subtotalExpenditure",
+		a.amount_procured AS "amountProcured",
+		a.express_fee AS "expressFee",
+		a.channel_refunds AS "channelRefunds",
+		a.profit AS "profit",
+		a.import_date AS "importDate"
+	</sql>
+	
+	<sql id="fxTaobaoProfitSettlementJoins">
+	</sql>
+    
+	<select id="get" resultType="FxTaobaoProfitSettlement">
+		SELECT 
+			<include refid="fxTaobaoProfitSettlementColumns"/>
+		FROM fx_taobao_profit_settlement a
+		<include refid="fxTaobaoProfitSettlementJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxTaobaoProfitSettlement">
+		SELECT 
+			<include refid="fxTaobaoProfitSettlementColumns"/>
+		FROM fx_taobao_profit_settlement a
+		<include refid="fxTaobaoProfitSettlementJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxTaobaoProfitSettlement">
+		SELECT 
+			<include refid="fxTaobaoProfitSettlementColumns"/>
+		FROM fx_taobao_profit_settlement a
+		<include refid="fxTaobaoProfitSettlementJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_taobao_profit_settlement(
+			id,
+			our_system_order_no,
+			shop_id,
+			our_system_order_time,
+			order_time,
+			taobao_order_no,
+			alipay_trade_no,
+			service_fee,
+			loan_income,
+			donation_of_trade,
+			distribution_costs,
+			tmail_commission,
+			integral_withhold,
+			seo_commission_fee,
+			other_fee,
+			subtotal_income,
+			creditcard_pay_service_fee,
+			after_sale_refund,
+			commission_returngive,
+			freight_risk,
+			point_returngive,
+			subtotal_expenditure,
+			amount_procured,
+			express_fee,
+			channel_refunds,
+			profit,
+			import_date
+		) VALUES (
+			#{id},
+			#{ourSystemOrderNo},
+			#{shopId},
+			#{ourSystemOrderTime},
+			#{orderTime},
+			#{taobaoOrderNo},
+			#{alipayTradeNo},
+			#{serviceFee},
+			#{loanIncome},
+			#{donationOfTrade},
+			#{distributionCosts},
+			#{tmailCommission},
+			#{integralWithhold},
+			#{seoCommissionFee},
+			#{otherFee},
+			#{subtotalIncome},
+			#{creditcardPayServiceFee},
+			#{afterSaleRefund},
+			#{commissionReturngive},
+			#{freightRisk},
+			#{pointReturngive},
+			#{subtotalExpenditure},
+			#{amountProcured},
+			#{expressFee},
+			#{channelRefunds},
+			#{profit},
+			#{importDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_taobao_profit_settlement SET 	
+			our_system_order_no = #{ourSystemOrderNo},
+			shop_id = #{shopId},
+			our_system_order_time = #{ourSystemOrderTime},
+			order_time = #{orderTime},
+			taobao_order_no = #{taobaoOrderNo},
+			alipay_trade_no = #{alipayTradeNo},
+			service_fee = #{serviceFee},
+			loan_income = #{loanIncome},
+			donation_of_trade = #{donationOfTrade},
+			distribution_costs = #{distributionCosts},
+			tmail_commission = #{tmailCommission},
+			integral_withhold = #{integralWithhold},
+			seo_commission_fee = #{seoCommissionFee},
+			other_fee = #{otherFee},
+			subtotal_income = #{subtotalIncome},
+			creditcard_pay_service_fee = #{creditcardPayServiceFee},
+			after_sale_refund = #{afterSaleRefund},
+			commission_returngive = #{commissionReturngive},
+			freight_risk = #{freightRisk},
+			point_returngive = #{pointReturngive},
+			subtotal_expenditure = #{subtotalExpenditure},
+			amount_procured = #{amountProcured},
+			express_fee = #{expressFee},
+			channel_refunds = #{channelRefunds},
+			profit = #{profit},
+			import_date = #{importDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_taobao_profit_settlement
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

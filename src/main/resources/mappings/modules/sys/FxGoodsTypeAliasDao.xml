@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.FxGoodsTypeAliasDao">
+    
+	<sql id="fxGoodsTypeAliasColumns">
+		a.goods_type_id AS "goodsTypeId",
+		a.goods_type_alias AS "goodsTypeAlias",
+		a.goods_type_alias_id AS "goodsTypeAliasId"
+	</sql>
+	
+	<sql id="fxGoodsTypeAliasJoins">
+	</sql>
+    
+	<select id="get" resultType="FxGoodsTypeAlias">
+		SELECT 
+			<include refid="fxGoodsTypeAliasColumns"/>
+		FROM fx_goods_type_alias a
+		<include refid="fxGoodsTypeAliasJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FxGoodsTypeAlias">
+		SELECT 
+			<include refid="fxGoodsTypeAliasColumns"/>
+		FROM fx_goods_type_alias a
+		<include refid="fxGoodsTypeAliasJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FxGoodsTypeAlias">
+		SELECT 
+			<include refid="fxGoodsTypeAliasColumns"/>
+		FROM fx_goods_type_alias a
+		<include refid="fxGoodsTypeAliasJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fx_goods_type_alias(
+			goods_type_id,
+			goods_type_alias,
+			goods_type_alias_id
+		) VALUES (
+			#{goodsTypeId},
+			#{goodsTypeAlias},
+			#{goodsTypeAliasId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fx_goods_type_alias SET 	
+			goods_type_id = #{goodsTypeId},
+			goods_type_alias = #{goodsTypeAlias},
+			goods_type_alias_id = #{goodsTypeAliasId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fx_goods_type_alias
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

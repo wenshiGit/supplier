@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package com.thinkgem.jeesite.modules.inventory.entity;
+package com.thinkgem.jeesite.modules.distribution.entity;
 
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotNull;
@@ -11,9 +11,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
- * 库存Entity
- * @author ZiruiSong
- * @version 2019-04-15
+ * 库存表Entity
+ * @author MaoNian
+ * @version 2019-04-28
  */
 public class FxInventory extends DataEntity<FxInventory> {
 	
